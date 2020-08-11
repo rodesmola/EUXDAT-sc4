@@ -47,7 +47,7 @@
             <v-toolbar class="green" tabs  height="42px">
               <v-toolbar-title>
                 <img style="width: 30px;" src="../assets/logo_1-1.png" alt="">
-                <span style="font-size: 18px; margin-left: 5px;">Demonstrator</span>
+                <span style="font-size: 18px; margin-left: 5px;">Climatic pattern changes</span>
               </v-toolbar-title>
 
               <v-spacer></v-spacer>
@@ -59,7 +59,7 @@
 
             <div style="background-color: white; padding-left: 10px; padding-right: 10px;">
 
-              <v-form ref="form" v-model="isValid" style="margin-top: 10px; margin-bottom: 5px; text-size: 10px;" lazy-validation >
+              <div ref="form" style="margin-top: 10px; margin-bottom: 5px; text-size: 10px;">
                 <v-layout row wrap style="text-align: left; padding-top: 8px; padding-bottom: 8px;">
 
                   <v-expansion-panel>
@@ -67,15 +67,21 @@
                      
                       <template v-slot:header >                        
                         <div class="exp-tittle" @click="updateComponent(i)">{{item.name}}</div>                      
-                      </template>                     
-                      <div v-if="i === 0" :key="componetCPkey">
+                      </template>              
+                      <div v-if="i === 0" :key="componetRAkey">
+                        <RiskAnalysis/>
+                      </div>  
+                      <div v-if="i === 1" :key="componetRCkey">
+                        <RiskComparison/>
+                      </div>                                                  
+                      <div v-if="i === 2" :key="componetCPkey">
                         <ClimaticPatterns/>
                       </div>
                     </v-expansion-panel-content>
                   </v-expansion-panel>
                   
                 </v-layout>
-              </v-form>
+              </div>
 
             </div>
           </div>
@@ -136,29 +142,31 @@ import BingMaps from 'ol/source/BingMaps.js';
 
 import StartDialog from '@/components/StartDialog.vue'
 import ClimaticPatterns from '@/components/ClimaticPatterns.vue'
+import RiskAnalysis from '@/components/RiskAnalysis.vue'
+import RiskComparison from '@/components/RiskComparison.vue'
 
 export default {
   name: 'Map',
   components: {
     StartDialog,
     ClimaticPatterns,
+    RiskAnalysis,
+    RiskComparison,
   },
   data: () => ({
     startDialog: true,
     selectedBaseLayer: 'aerial',
     panels: [
+      {"name": "Crop climate risk analysis"},
+      {"name": "Crop climate risk Comparison"},
       {"name": "Cimatic pattenrs"}
-    ],
-    isValid: false,    
+    ],   
     isAlert: false,
     alertMsg: "",
     alertType: "error",
-    isLoading: false,
-    outputPanel: false,
-    outputDates: [],
-    componetPCkey: 0,
-    componetMZkey: 0,
+    componetRAkey: 0,
     componetCPkey: 0,
+    componetRCkey: 0,
   }),
   methods: {
     /**
@@ -169,12 +177,12 @@ export default {
     */
     updateComponent(i){
       if(i === 0){
-          this.componetPCkey ++
-          this.$eventBus.$emit('updateComponetPC', this.componetPCkey);
+          this.componetRAkey ++
+          //this.$eventBus.$emit('updateComponetRA', this.componetRAkey);
       }else if (i === 1){
-          this.componetMZkey ++
-          this.$eventBus.$emit('updateComponetMZ', this.componetMZkey);
-      } else {
+           this.componetRCkey ++
+      //     this.$eventBus.$emit('updateComponetMZ', this.componetMZkey);
+      }else {
         this.componetCPkey ++
       } 
     },
@@ -307,14 +315,14 @@ export default {
       this.showAlert(type, msg);
     });
 
-    this.$eventBus.$on('show-outputPanel', (bool, dates)  => {
-      this.outputPanel = bool;
-      this.outputDates = dates;      
-    });
+    // this.$eventBus.$on('show-outputPanel', (bool, dates)  => {
+    //   this.outputPanel = bool;
+    //   this.outputDates = dates;      
+    // });
 
-    this.$eventBus.$on('updateComponetRoot', (i)  => {
-      this.updateComponent(i);      
-    });
+    // this.$eventBus.$on('updateComponetRoot', (i)  => {
+    //   this.updateComponent(i);      
+    // });
 
   },
   filters: {
@@ -341,7 +349,7 @@ export default {
 	box-shadow: 0 12px 20px -10px rgba(76,175,80,.28),0 4px 20px 0 rgba(0,0,0,.12),0 7px 8px -5px rgba(76,175,80,.2) !important;
 }
 
-.exp-tittle{
+.exp-tittle {
   color: #37aa48; 
   font-size: 20px !important;	
   font-family: Roboto,sans-serif !important; 

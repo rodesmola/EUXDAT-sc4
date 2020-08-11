@@ -367,10 +367,6 @@ export default {
     },
     methods: {
 
-        getMapCenter() {
-            this.$eventBus.$emit('get-map-center');            
-        },
-
         /**
         * Create the url to acces the output mb diagram
         *

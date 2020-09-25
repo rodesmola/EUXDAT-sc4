@@ -6,6 +6,7 @@
             <p style="color: #27304c; font-size 6px;" class="pl-2 pr-2">
                 Select an analisys to run for the area you are seeing in the map. 
                 Then click the "run" button to display the result.
+                <a @click="infoDialog = true">More info.</a>
             </p>
             </v-layout>
         </v-flex>                    
@@ -104,7 +105,40 @@
                 RUN
             </v-btn>
         </v-flex>
-
+        <!------------ Info dialog ------------>
+        <v-dialog v-model="infoDialog" max-width="800">
+            <v-card>
+                <v-card-title class="headline">
+                    <img style="width: 155px;" src="../assets/logo_titulo.png" alt="">
+                </v-card-title>
+                <v-divider></v-divider>
+                <v-card-text>
+                    <v-flex xs12>
+                        <v-card flat>
+                            <v-card-text>
+                                <div style="margin-bottom: 15px">
+                                    <img style="width: 160px; position: absolute; opacity: 0.2; bottom: 20px; right: 5px;" src="../assets/logo2.png" alt="">
+                                    <span class="title" style="color: #37aa48; font-size 12px;">Crop climate risk analysis</span>
+                                </div>                    
+                                <p>The Crop Climate Risk diagram shows the risk of occurrence of a weather event (drought, frost), in the selected location, 
+                                for a specific crop, during its growing season.</p>
+                                <p>The risk is calculated as the product of likelihood of the event (based on historical statistics for the selected time 
+                                 period) and the impact on the crop (growing phase specific, based on empirical/literature assessment).</p>
+                                <p>Crop growing phases, based on cumulated growing degree days (GDD), are plotted in the background.</p>
+                            </v-card-text>
+                        </v-card>
+                    </v-flex>                           
+                </v-card-text>
+                <v-divider></v-divider>
+                <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="green darken-1" dark small @click="infoDialog = false">
+                    Got it!
+                </v-btn>
+                </v-card-actions>
+            </v-card>                    
+        </v-dialog>
+        <!------------ /Info dialog ------------>
         <!------------ Output dialog ------------>
         <v-dialog v-model="outputDialog" max-width="800">
             <v-card v-if = !isLoading> 
@@ -171,6 +205,7 @@ export default {
         location_name: '',
         isLoading: false,
         outputDialog: false,   
+        infoDialog: false, 
         grahpURL: ""     
     }),
     methods: {

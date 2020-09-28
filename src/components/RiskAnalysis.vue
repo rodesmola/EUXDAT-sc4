@@ -184,7 +184,7 @@ export default {
         inputNumRules: [            
             v => (v && /^\d+(\.\d{1,20})?$/.test(v)) || ''
         ],  
-        API_key: "8vh83gfhu34g",
+        API_key: "1a98a8ef2598-EU-SG-testing",
         eventRiskSelected: 'Drought',
         eventRiskArr: ['Drought', 'Frost'],
         cropOfInterestSelected: 'Cotton',
@@ -256,7 +256,7 @@ export default {
                 this.grahpURL = this.grahpURL.concat('&location_name=', this.location_name)
             }
 
-this.grahpURL = 'http://pyapi.meteoblue.com/cropClimateRisk/Drought/Maize/49.1/16.6/DEMOKEY?format=png&years_start=2010&years_end=2020'
+this.grahpURL = 'http://pyapi.meteoblue.com/cropClimateRisk/Drought/Maize/49.1/16.6/1a98a8ef2598-EU-SG-testing?format=png&years_start=2010&years_end=2020'
             this.$http.get(this.grahpURL).then(response => {
                                     
                 setTimeout(function(){ 

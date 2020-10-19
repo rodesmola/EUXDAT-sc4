@@ -4,8 +4,7 @@
         <v-flex xs12 pl-2 row class="hidden-md-and-down">
             <v-layout row wrap>
             <p style="color: #27304c; font-size 6px;" class="pl-2 pr-2">
-                Select an analisys to run for the area you are seeing in the map. 
-                Then click the "run" button to display the result.
+                Select an analisys to run for the coordinates showed on top of the map. Then click the "run" button to display the result. 
                 <a @click="infoDialog = true">More info.</a>
             </p>
             </v-layout>
@@ -15,7 +14,7 @@
             <v-layout row wrap class="pl-2 pr-2"> 
 
                 <v-flex sm9 xs6 md6 lg6 xlg6 class="pl-3 pr-3">
-                    <v-combobox style="margin-top: 0px; padding-top: 0px"
+                    <v-combobox hide-details hide-no-data hide-selected dense style="margin-top: 0px; padding-top: 0px"
                     v-model="eventRiskSelected"
                     :items="eventRiskArr"
                     item-text="name"
@@ -26,7 +25,7 @@
                 </v-flex>
 
                 <v-flex sm9 xs6 md6 lg6 xlg6 class="pl-3 pr-3">
-                    <v-combobox style="margin-top: 0px; padding-top: 0px"
+                    <v-combobox hide-details hide-no-data hide-selected dense style="margin-top: 0px; padding-top: 0px"
                     v-model="cropOfInterestSelected"
                     :items="cropOfInterestArr"
                     item-text="name"
@@ -37,12 +36,12 @@
                 </v-flex>
 
                 <v-flex xs8 sm8 md6 lg8 xlg8 class="pl-3 pr-3">
-                    <v-text-field dense color="#77b942" type="text" v-model="location_name" :value="location_name"
+                    <v-text-field hide-details hide-no-data hide-selected dense color="#77b942" type="text" v-model="location_name" :value="location_name"
                     label="Diagram title"></v-text-field>
                 </v-flex>
 
                 <v-flex sm9 xs6 md6 lg4 xlg4 class="pl-3 pr-3">
-                    <v-combobox 
+                    <v-combobox  hide-details hide-no-data hide-selected dense
                     v-model="formatSelected"
                     :items="formatArr"
                     item-text="name"
@@ -53,60 +52,60 @@
                 </v-flex>
 
                 <v-flex xs3 class="pl-3 pr-3">
-                    <v-text-field dense color="#77b942" type="number" v-model="years_start" :value="years_start"
+                    <v-text-field hide-details hide-no-data hide-selected dense color="#77b942" type="number" v-model="years_start" :value="years_start"
                     label="Start year" :rules="inputNumRules"></v-text-field>
                 </v-flex>
                 <v-flex xs3 class="pl-3 pr-3">
-                    <v-text-field dense color="#77b942" type="number" v-model="years_end" :value="years_end"
+                    <v-text-field hide-details hide-no-data hide-selected dense color="#77b942" type="number" v-model="years_end" :value="years_end"
                     label="End year" :rules="inputNumRules"></v-text-field>
                 </v-flex>
                 <v-flex xs3 class="pl-3 pr-3">
-                    <v-text-field dense color="#77b942" type="number" v-model="month_start" :value="month_start"
+                    <v-text-field hide-details hide-no-data hide-selected dense color="#77b942" type="number" v-model="month_start" :value="month_start"
                     label="Start month" :rules="inputNumRules"></v-text-field>
                 </v-flex>
                 <v-flex xs3 class="pl-3 pr-3">
-                    <v-text-field dense color="#77b942" type="number" v-model="month_end" :value="month_end"
+                    <v-text-field hide-details hide-no-data hide-selected dense color="#77b942" type="number" v-model="month_end" :value="month_end"
                     label="End month" :rules="inputNumRules"></v-text-field>
                 </v-flex>
                 <v-flex xs3 class="pl-3 pr-3">
-                    <v-text-field dense color="#77b942" type="number" v-model="t_base" :value="t_base"
+                    <v-text-field hide-details hide-no-data hide-selected dense color="#77b942" type="number" v-model="t_base" :value="t_base"
                     label="Base temp" :rules="inputNumRules"></v-text-field>
                 </v-flex>
                 <v-flex xs3 class="pl-3 pr-3">
-                    <v-text-field dense color="#77b942" type="number" v-model="t_max" :value="t_max"
+                    <v-text-field hide-details hide-no-data hide-selected dense color="#77b942" type="number" v-model="t_max" :value="t_max"
                     label="Max temp" :rules="inputNumRules"></v-text-field>
                 </v-flex>
                 <v-flex xs3 class="pl-3 pr-3">
-                    <v-text-field dense color="#77b942" type="number" v-model="drought_threshold" :value="drought_threshold"
+                    <v-text-field hide-details hide-no-data hide-selected dense color="#77b942" type="number" v-model="drought_threshold" :value="drought_threshold"
                     label="Drought threshold" :rules="inputNumRules"></v-text-field>
                 </v-flex>
                 <v-flex xs3 class="pl-3 pr-3">
-                    <v-text-field dense color="#77b942" type="number" v-model="drought_duration" :value="drought_duration"
+                    <v-text-field hide-details hide-no-data hide-selected dense color="#77b942" type="number" v-model="drought_duration" :value="drought_duration"
                     label="Drought duration" :rules="inputNumRules"></v-text-field>
                 </v-flex>
                 <v-flex xs3 class="pl-3 pr-3">
-                    <v-text-field dense color="#77b942" type="number" v-model="frost_threshold" :value="frost_threshold"
+                    <v-text-field hide-details hide-no-data hide-selected dense color="#77b942" type="number" v-model="frost_threshold" :value="frost_threshold"
                     label="Frost threshold" :rules="inputNumRules"></v-text-field>
                 </v-flex>
                 <v-flex xs3 class="pl-3 pr-3">
-                    <v-text-field dense color="#77b942" type="number" v-model="frost_duration" :value="frost_duration"
+                    <v-text-field hide-details hide-no-data hide-selected dense color="#77b942" type="number" v-model="frost_duration" :value="frost_duration"
                     label="Frost duration" :rules="inputNumRules"></v-text-field>
                 </v-flex>
                 <v-flex xs3 class="pl-3 pr-3">
-                    <v-text-field dense color="#77b942" type="number" v-model="soil_water_capacity" :value="soil_water_capacity"
+                    <v-text-field hide-details hide-no-data hide-selected dense color="#77b942" type="number" v-model="soil_water_capacity" :value="soil_water_capacity"
                     label="Soil water capacity" :rules="inputNumRules"></v-text-field>
                 </v-flex>
 
             </v-layout>
         </v-flex>
                     
-        <v-flex xs12 sm12 md12 lg12 class="text-xs-right" style="padding: 0px; margin-bottom: 5px;">
+        <v-flex xs12 sm12 md12 lg12 class="text-xs-right mt-2" style="padding: 0px; margin-bottom: 5px;">
             <v-btn small round color="#27304c" :loading="isLoading" dark @click="runService()" title="Run service" >
                 RUN
             </v-btn>
         </v-flex>
         <!------------ Info dialog ------------>
-        <v-dialog v-model="infoDialog" max-width="800">
+        <v-dialog v-model="infoDialog" max-width="900">
             <v-card>
                 <v-card-title class="headline">
                     <img style="width: 155px;" src="../assets/logo_titulo.png" alt="">
@@ -125,6 +124,8 @@
                                 <p>The risk is calculated as the product of likelihood of the event (based on historical statistics for the selected time 
                                  period) and the impact on the crop (growing phase specific, based on empirical/literature assessment).</p>
                                 <p>Crop growing phases, based on cumulated growing degree days (GDD), are plotted in the background.</p>
+                                <img style="width: 850px" src="../assets/crop_climate_risk1.png" alt="">                               
+                                <img style="width: 850px" src="../assets/crop_climate_risk2.png" alt="">
                             </v-card-text>
                         </v-card>
                     </v-flex>                           
@@ -256,9 +257,9 @@ export default {
                 this.grahpURL = this.grahpURL.concat('&location_name=', this.location_name)
             }
 
-this.grahpURL = 'http://pyapi.meteoblue.com/cropClimateRisk/Drought/Maize/49.1/16.6/1a98a8ef2598-EU-SG-testing?format=png&years_start=2010&years_end=2020'
-            this.$http.get(this.grahpURL).then(response => {
-                                    
+            //this.grahpURL = 'http://pyapi.meteoblue.com/cropClimateRisk/Drought/Maize/49.1/16.6/1a98a8ef2598-EU-SG-testing?format=png&years_start=2010&years_end=2020'
+
+            this.$http.get(this.grahpURL).then(response => {                                    
                 setTimeout(function(){ 
                     self.isLoading = false;                                                 
                     self.$eventBus.$emit('show-alert', "success", "Diagram retrieved successfully"); 
@@ -268,10 +269,7 @@ this.grahpURL = 'http://pyapi.meteoblue.com/cropClimateRisk/Drought/Maize/49.1/1
                 this.isLoading = false;                    
                 this.$eventBus.$emit('show-alert', "error", response.statusText); 
             });
-
             console.log(this.grahpURL)
-
-
         }        
     },
     filters: {
@@ -281,8 +279,7 @@ this.grahpURL = 'http://pyapi.meteoblue.com/cropClimateRisk/Drought/Maize/49.1/1
             }
             return value
         }
-    }
-
+    },
 };
 </script>
 

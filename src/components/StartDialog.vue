@@ -2,13 +2,12 @@
 
     <v-card-text>
         <v-flex xs12>
-            <v-card flat>
-                <v-card-text>
-
-                <div style="margin-bottom: 15px">
-                    <img style="width: 160px; position: absolute; opacity: 0.2; bottom: 70px; right: 5px;" src="../assets/logo2.png" alt="">
-                    <span class="title" style="color: #1e2f4d;">Information support for field use recommendations</span>
-                </div>                    
+            <v-card flat class="pa-2">
+                                    
+                <div style="margin-bottom: 15px; margin-top: 15px">
+                    <img style="width: 160px; position: absolute; opacity: 0.2; bottom: 5px; right: 5px;" src="../assets/logo2.png" alt="">
+                    <span class="title" style="color: #1e2f4d;">Climate pattern changes</span>
+                </div> 
                 <p>
                     Today, climate change is affecting most areas in Europe. The magnitude of the changes
                     is not yet fully known, however, the variability over the past 10 to 30 years is rather precisely understood.
@@ -53,8 +52,6 @@
                     <li>Simulate effect of climate on different crops (link to scenario 2).</li>
                     </ul>
                 </p>
-                </v-card-text>
-
             </v-card>
         </v-flex>
     </v-card-text>

@@ -41,7 +41,7 @@
 
 
         <v-flex id="map" style="max-height: 100vh; height: 100vh; padding: 0px; margin: 0px;">
-
+          <div id="mapsight"></div>
           <!------------ Service form start ------------>
           <div class="flex xs12 sm5 md5 lg4 xl3" style="position: absolute; z-index: 10; top:80px; left: 10px; background-color: #27304c;">
             <v-toolbar class="green" tabs  height="42px">
@@ -86,6 +86,34 @@
             </div>
           </div>
           <!------------/Service form------------>
+
+          <!----------- Lat/Long control start --------->
+          <div class="flex xs12 sm5 md4 lg2" style="position: absolute; z-index: 10; top:80px; left: 45%;">           
+              <v-flex xs12  row style="background-color: white;">
+                <v-layout row wrap>
+                  <v-flex xs6 class="pl-2 pr-2">
+                    <v-text-field hide-details hide-no-data hide-selected dense color="#77b942" type="text" v-model="mapCoords.lat" :value="mapCoords.lat"
+                    label="Latitude"></v-text-field>
+                  </v-flex>
+                  <v-flex xs6 class="pl-2 pr-2">
+                    <v-text-field hide-details hide-no-data hide-selected dense color="#77b942" type="text" v-model="mapCoords.long" :value="mapCoords.long"
+                    label="Longitude"></v-text-field>
+                  </v-flex>
+       
+                  <v-flex xs6 class="pl-2 pr-2">
+                    <v-btn dark small block color="#27304c" @click="centerMap(true)" title="Center map on initial position.">
+                      <v-icon dark>home</v-icon>
+                    </v-btn>
+                  </v-flex>
+                  <v-flex xs6 class="pl-2 pr-2">
+                    <v-btn dark small block style="background-color: #47a34b; color: white;" @click="centerMap(false)" title="Center map on coordinates above.">
+                      <v-icon dark>my_location</v-icon>
+                    </v-btn>
+                  </v-flex>                  
+                </v-layout>
+              </v-flex>           
+          </div>
+          <!----------- Lat/Long control end --------->
 
           <!------------ Zoom controls and layer manager start ------------>
           <div class="flex xs12 sm4 md3 lg2" style="position: absolute; z-index: 10; top:80px; right: 10px;">
@@ -159,7 +187,7 @@ export default {
     panels: [
       {"name": "Crop climate risk analysis"},
       {"name": "Crop climate risk Comparison"},
-      {"name": "Cimatic pattenrs"}
+      {"name": "Cimatic patterns"}
     ],   
     isAlert: false,
     alertMsg: "",
@@ -167,6 +195,13 @@ export default {
     componetRAkey: 0,
     componetCPkey: 0,
     componetRCkey: 0,
+    mapCoords: {
+      lat: 0,
+      long: 0,
+    },
+    inputNumRules: [            
+        v => (v && /^\d+(\.\d{1,20})?$/.test(v)) || ''
+    ],  
   }),
   methods: {
     /**
@@ -238,15 +273,35 @@ export default {
         ],
         view: new View({
           projection: 'EPSG:4326', 
-          center: [12.14, 48.51],          
+          center: [12.141, 48.512],          
           zoom: 11,
-          minZoom: 8,
+          //minZoom: 8,
         })
       });
       
       this.map = myMap;
       this.$store.state.map = myMap;
+
+      var self = this;
+      myMap.on('moveend', function () {  
+        var center = myMap.getView().getCenter(); 
+        self.mapCoords.lat = center[1].toString().substring(0, 6)
+        self.mapCoords.long = center[0].toString().substring(0, 6)   
+        self.$store.state.mapCoords = self.mapCoords;
+      });
+
     },//initMap
+    centerMap(isHome){
+      
+      if(isHome){
+        this.mapCoords.long = 12.141
+        this.mapCoords.lat = 48.512
+      }
+      this.map.getView().animate({
+        center: [this.mapCoords.long, this.mapCoords.lat],
+        duration: 1000,
+      });
+    },
     /**
     * zoom map controls
     *
@@ -256,7 +311,6 @@ export default {
     */
     zoomMap(map, op){
       var zoom = map.getView().getZoom();
-
       if(op === "in"){
         map.getView().setZoom(zoom + 1)
       }else{
@@ -343,7 +397,7 @@ export default {
   filters: {
     truncate: function(value) {
       if(value != undefined){
-        value = value.toString().substring(0, 16);
+        value = value.toString().substring(0, 2);
       }
       return value
     },
@@ -371,4 +425,17 @@ export default {
   font-weight: 500; line-height: 1 !important; 	
   letter-spacing: .02em !important;
 }
+
+#mapsight {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 51px;
+	height: 51px;
+	margin: -26px;
+	pointer-events: none;
+	z-index: 100;
+	background: url("../assets/epsg-target-large.png") 0 0 no-repeat;
+}
+
 </style>

@@ -4,7 +4,7 @@
         <v-flex xs12 pl-2 row class="hidden-md-and-down">
             <v-layout row wrap>
             <p style="color: #27304c; font-size 6px;" class="pl-2 pr-2">
-                Select an analisys to run for the coordinates showed on top of the map. Then click the "run" button to display the result. 
+                The service will use the coordinates showed in the rigth side of the map, can be input by the user. 
             </p>
             </v-layout>
         </v-flex>                    
@@ -17,6 +17,7 @@
             item-value="value"
             label="Select service"
             color="green"
+            @change="resetForm()"
             ></v-combobox>
         </v-flex>
 
@@ -31,12 +32,18 @@
                     </p>
                 </v-flex>
                 <v-flex xs6 class="pl-3 pr-3">
-                    <v-text-field hide-details hide-no-data hide-selected dense color="#77b942" type="number" v-model="cold_tmp_threshold" :value="cold_tmp_threshold"
-                    label="Temperature threshold *" :rules="inputNumRules" required></v-text-field>
-                </v-flex>
-                <v-flex xs6 class="pl-3 pr-3">
-                    <v-text-field hide-details hide-no-data hide-selected dense color="#77b942" type="number" v-model="cold_dur_threshold" :value="cold_dur_threshold"
-                    label="Duration threshold *" :rules="inputNumRules" required></v-text-field>
+                    <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="cold_tmp_threshold" 
+                        :value="cold_tmp_threshold" label="Temperature threshold *" 
+                        @input="$v.cold_tmp_threshold.$touch()" @blur="$v.cold_tmp_threshold.$touch()"
+                        :error-messages="cold_tmp_thresholdErrors">                        
+                    </v-text-field>
+                    </v-flex>
+                    <v-flex xs6 class="pl-3 pr-3">
+                        <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="cold_dur_threshold" 
+                        :value="cold_dur_threshold" label="Duration threshold *" 
+                        @input="$v.cold_dur_threshold.$touch()" @blur="$v.cold_dur_threshold.$touch()"
+                        :error-messages="cold_dur_thresholdErrors">                        
+                    </v-text-field>
                 </v-flex>
             </v-layout>
         </v-flex>
@@ -50,12 +57,18 @@
                     </p>
                 </v-flex>
                 <v-flex xs6 class="pl-3 pr-3">
-                    <v-text-field hide-details hide-no-data hide-selected dense color="#77b942" type="number" v-model="warn_tmp_threshold" :value="warn_tmp_threshold"
-                    label="Temperature threshold *" :rules="inputNumRules" required></v-text-field>
+                    <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="warn_tmp_threshold" 
+                        :value="warn_tmp_threshold" label="Temperature threshold *"                         
+                        @input="$v.warn_tmp_threshold.$touch()" @blur="$v.warn_tmp_threshold.$touch()"
+                        :error-messages="warn_tmp_thresholdErrors">                        
+                    </v-text-field>
                 </v-flex>
                 <v-flex xs6 class="pl-3 pr-3">
-                    <v-text-field hide-details hide-no-data hide-selected dense color="#77b942" type="number" v-model="warn_dur_threshold" :value="warn_dur_threshold"
-                    label="Duration threshold *" :rules="inputNumRules" required></v-text-field>
+                    <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="warn_dur_threshold" 
+                        :value="warn_dur_threshold" label="Duration threshold *"
+                        @input="$v.warn_dur_threshold.$touch()" @blur="$v.warn_dur_threshold.$touch()"
+                        :error-messages="warn_dur_thresholdErrors">                        
+                    </v-text-field>
                 </v-flex>
             </v-layout>
         </v-flex>
@@ -70,8 +83,11 @@
                     </p>
                 </v-flex>
                 <v-flex xs6 class="pl-3 pr-3">
-                    <v-text-field hide-details hide-no-data hide-selected dense color="#77b942" type="number" v-model="prec_threshold" :value="prec_threshold"
-                    label="Precipitation threshold *" :rules="inputNumRules" required></v-text-field>
+                    <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="prec_threshold" 
+                        :value="prec_threshold" label="Precipitation threshold *" 
+                        @input="$v.prec_threshold.$touch()" @blur="$v.prec_threshold.$touch()"
+                        :error-messages="prec_thresholdErrors">                        
+                    </v-text-field>
                 </v-flex>
             </v-layout>
         </v-flex>
@@ -85,8 +101,11 @@
                     </p>
                 </v-flex>
                 <v-flex xs6 class="pl-3 pr-3">
-                    <v-text-field hide-details hide-no-data hide-selected dense color="#77b942" type="number" v-model="wat_cap_threshold" :value="wat_cap_threshold"
-                    label="Maximum available soil water capacity threshold *" :rules="inputNumRules" required></v-text-field>
+                    <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="wat_cap_threshold" 
+                        :value="wat_cap_threshold" label="Maximum available soil water capacity threshold *" 
+                        @input="$v.wat_cap_threshold.$touch()" @blur="$v.wat_cap_threshold.$touch()"
+                        :error-messages="wat_cap_thresholdErrors">                        
+                    </v-text-field>
                 </v-flex>
             </v-layout>
         </v-flex>
@@ -100,12 +119,14 @@
                     </p>
                 </v-flex>
                 <v-flex xs6 class="pl-3 pr-3">
-                    <v-text-field hide-no-data hide-selected dense color="#77b942" type="number" v-model="cloud_cvr_threshold" :value="cloud_cvr_threshold"
-                    label="Cloud cover threshold % *" :rules="inputNumRules" required></v-text-field>
+                    <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="cloud_cvr_threshold" 
+                        :value="cloud_cvr_threshold" label="Cloud cover threshold % *" 
+                        @input="$v.cloud_cvr_threshold.$touch()" @blur="$v.cloud_cvr_threshold.$touch()"
+                        :error-messages="cloud_cvr_thresholdErrors">                        
+                    </v-text-field>
                 </v-flex>
             </v-layout>
         </v-flex>
-
                     
         <v-flex xs12 sm12 md12 lg12 class="text-xs-right mt-2" style="padding: 0px; margin-bottom: 5px;">
             <v-btn small round color="#27304c" :disabled="!selectedMbService" :loading="isLoading" dark @click="mbService(selectedMbService)" title="Run service" >
@@ -151,22 +172,13 @@
 <script>
 
 import moment from 'moment';
+import { required, numeric } from 'vuelidate/lib/validators'
+
 export default {
     name: "ClimaticPatterns",
     props: {},
-    data: () => ({
-        isValid: false,
-        inputNumRules: [
-        //v => !!v || 'Required field',
-        v => (v && /^\d+(\.\d{1,20})?$/.test(v)) || ''
-        ],
-        cold_tmp_threshold: 1,
-        cold_dur_threshold: 1,
-        warn_tmp_threshold: 30,
-        warn_dur_threshold: 1,
-        prec_threshold: 30,
-        wat_cap_threshold: 100,
-        cloud_cvr_threshold: 15,
+    data: () => ({        
+
         API_key: "8vh83gfhu34g",
         mbServices: [
         {
@@ -191,10 +203,78 @@ export default {
         }
         ],
         selectedMbService:"",
+        cold_tmp_threshold: 1,
+        cold_dur_threshold: 1,
+        warn_tmp_threshold: 30,
+        warn_dur_threshold: 1,
+        prec_threshold: 30,
+        wat_cap_threshold: 100,
+        cloud_cvr_threshold: 15,
+        isValid: false,        
         grahpURL: "",
         mbDialog: false,
         isLoading: false,
     }),
+    validations: {
+        cold_tmp_threshold: {required, numeric},
+        cold_dur_threshold: {required, numeric},
+        warn_tmp_threshold: {required, numeric},
+        warn_dur_threshold: {required, numeric},
+        prec_threshold: {required, numeric},
+        wat_cap_threshold: {required, numeric},
+        cloud_cvr_threshold: {required, numeric},                  
+    },
+    computed: {
+        cold_tmp_thresholdErrors () {
+            const errors = []
+            if (!this.$v.cold_tmp_threshold.$dirty) return errors
+            !this.$v.cold_tmp_threshold.required && errors.push('Required field.')
+            !this.$v.cold_tmp_threshold.numeric && errors.push('Insert a number')
+            return errors
+        },  
+        cold_dur_thresholdErrors () {
+            const errors = []
+            if (!this.$v.cold_dur_threshold.$dirty) return errors
+            !this.$v.cold_dur_threshold.required && errors.push('Required field.')
+            !this.$v.cold_dur_threshold.numeric && errors.push('Insert a number')
+            return errors
+        },    
+        warn_tmp_thresholdErrors () {
+            const errors = []
+            if (!this.$v.warn_tmp_threshold.$dirty) return errors
+            !this.$v.warn_tmp_threshold.required && errors.push('Required field.')
+            !this.$v.warn_tmp_threshold.numeric && errors.push('Insert a number')
+            return errors
+        },   
+        warn_dur_thresholdErrors () {
+            const errors = []
+            if (!this.$v.warn_dur_threshold.$dirty) return errors
+            !this.$v.warn_dur_threshold.required && errors.push('Required field.')
+            !this.$v.warn_dur_threshold.numeric && errors.push('Insert a number')
+            return errors
+        },   
+        prec_thresholdErrors () {
+            const errors = []
+            if (!this.$v.prec_threshold.$dirty) return errors
+            !this.$v.prec_threshold.required && errors.push('Required field.')
+            !this.$v.prec_threshold.numeric && errors.push('Insert a number')
+            return errors
+        },
+        wat_cap_thresholdErrors () {
+            const errors = []
+            if (!this.$v.wat_cap_threshold.$dirty) return errors
+            !this.$v.wat_cap_threshold.required && errors.push('Required field.')
+            !this.$v.wat_cap_threshold.numeric && errors.push('Insert a number')
+            return errors
+        },  
+        cloud_cvr_thresholdErrors () {
+            const errors = []
+            if (!this.$v.cloud_cvr_threshold.$dirty) return errors
+            !this.$v.cloud_cvr_threshold.required && errors.push('Required field.')
+            !this.$v.cloud_cvr_threshold.numeric && errors.push('Insert a number')
+            return errors
+        },                                
+    },    
     methods: {
         /**
         * Create the url to acces the output mb diagram
@@ -205,35 +285,62 @@ export default {
         mbService(service){
 
             var self = this;
-            this.isLoading = true;            
-            var coords4326 = this.$store.state.map.getView().getCenter();           
-
+                                   
             var url = 'http://my.meteoblue.com/visimage/'.concat(service.value,
-            '&lat=', coords4326[1].toString(), '&lon=', coords4326[0].toString(), '&apikey=', this.API_key);
+            '&lat=', this.$store.state.mapCoords.lat, '&lon=', this.$store.state.mapCoords.long, '&apikey=', this.API_key);
 
             if(service.value === 'history_frostrisk?'){
-                this.grahpURL = url.concat('&thr=', this.cold_tmp_threshold, '&frostlength=', this.cold_dur_threshold);
+                if(!this.$v.cold_tmp_threshold.$invalid && !this.$v.cold_dur_threshold.$invalid){
+                    this.grahpURL = url.concat('&thr=', this.cold_tmp_threshold, '&frostlength=', this.cold_dur_threshold);
+                    this.isValid = true;
+                }else{
+                    this.isValid = false;
+                }                
             }else if (service.value === 'history_heatrisk?') {
-                this.grahpURL = url.concat('&thr=', this.warn_tmp_threshold, '&frostlength=', this.warn_dur_threshold);
+                if(!this.$v.warn_tmp_threshold.$invalid && !this.$v.warn_dur_threshold.$invalid){
+                    this.grahpURL = url.concat('&thr=', this.warn_tmp_threshold, '&frostlength=', this.warn_dur_threshold);
+                    this.isValid = true;
+                }else{
+                    this.isValid = false;
+                }                
             }else if (service.value === 'history_preciprisk?') {
-                this.grahpURL = url.concat('&thr=', this.prec_threshold);
+                if(!this.$v.prec_threshold.$invalid){
+                    this.grahpURL = url.concat('&thr=', this.prec_threshold);
+                    this.isValid = true;
+                }else{
+                    this.isValid = false;
+                }                
             }else if (service.value === 'history_watercapacity?') {
-                this.grahpURL = url.concat('&thr=', this.wat_cap_threshold);
+                if(!this.$v.wat_cap_threshold.$invalid){
+                    this.grahpURL = url.concat('&thr=', this.wat_cap_threshold);
+                    this.isValid = true;
+                }else{
+                    this.isValid = false;
+                }                 
             }else if (service.value === 'history_cloudcover?') {
-                this.grahpURL = url.concat('&thr=', this.cloud_cvr_threshold);
+                if(!this.$v.cloud_cvr_threshold.$invalid){
+                    this.grahpURL = url.concat('&thr=', this.cloud_cvr_threshold);
+                    this.isValid = true;
+                }else{
+                    this.isValid = false;
+                }                   
             }
 
-            this.$http.get(this.graphURL).then(response => {
-                                    
-                setTimeout(function(){ 
-                    self.isLoading = false;                                                 
-                    self.$eventBus.$emit('show-alert', "success", "Diagram retrieved successfully"); 
-                    self.mbDialog = true;
-                }, 4000);                           
-            }, response => {
-                this.isLoading = false;                    
-                this.$eventBus.$emit('show-alert', "error", response.statusText); 
-            });
+            if(this.isValid){
+                this.isLoading = true; 
+                this.$http.get(this.graphURL).then(response => {                                    
+                    setTimeout(function(){ 
+                        self.isLoading = false;                                                 
+                        self.$eventBus.$emit('show-alert', "success", "Diagram retrieved successfully"); 
+                        self.mbDialog = true;
+                    }, 4000);                           
+                }, response => {
+                    this.isLoading = false;                    
+                    this.$eventBus.$emit('show-alert', "error", response.statusText); 
+                });
+            }else{
+                this.$eventBus.$emit('show-alert', "error", "Please insert correct values"); 
+            }
         
         },//mbService
         /**
@@ -244,6 +351,15 @@ export default {
         downloadGraph(){
             window.open(this.grahpURL)  
         },
+        resetForm(){
+            this.cold_tmp_threshold= 1
+            this.cold_dur_threshold = 1
+            this.warn_tmp_threshold = 30
+            this.warn_dur_threshold = 1
+            this.prec_threshold = 30
+            this.wat_cap_threshold = 100
+            this.cloud_cvr_threshold = 15
+        }
     },
     filters: {
         truncate: function(value) {

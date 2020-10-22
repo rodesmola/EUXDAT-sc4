@@ -28,7 +28,9 @@
 
         <v-toolbar color="white" xs12 tabs  height="58px" style="position: absolute; z-index: 10; border-bottom: 4px solid #098837 !important;">
           <v-toolbar-title>
-            <img style="width: 140px;" src="http://www.euxdat.eu/wp-content/uploads/2017/12/logo_1-1.png" alt="">
+            <a href="https://test.euxdat.eu/">
+              <img style="width: 140px;" src="http://www.euxdat.eu/wp-content/uploads/2017/12/logo_1-1.png" alt="">
+            </a>
           </v-toolbar-title>
           <v-spacer></v-spacer>
           <span style="color:#27304c">

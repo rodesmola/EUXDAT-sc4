@@ -365,7 +365,6 @@ export default {
             return errors
         },              
     },
-
     methods: {
          /**
         * Create the url to acces the output mb diagram

@@ -261,8 +261,7 @@ export default {
         grahpURL: "",
         format: "",
         outputjson: {},
-        infoDialog: false,
-        highchartsOutput:"",
+        infoDialog: false,        
         selectedMbService:"",
         mbServices: [
             {
@@ -301,20 +300,13 @@ export default {
     }),
     methods: {   
         getOutput(url, format){
-
-            this.isLoading = true;            
+                
             this.outputDialog = true;
             this.grahpURL = url;
             this.format = format;
             var self = this;           
 
-            if(format === 'png'){                
-                setTimeout(function(){                                                                    
-                    self.$eventBus.$emit('show-alert', "success", "Diagram retrieved successfully");   
-                    self.isLoading = false;                  
-                }, 4000);                           
-            }else if(format === 'json'){
-
+            if(format === 'json'){
                 this.$http.get(url).then(response => {                             
                     this.outputjson = response.body;    
                     this.isLoading = false;         
@@ -325,13 +317,10 @@ export default {
                 });
 
             }else{
-                this.$http.get(url).then(response => {                                                    
-                                        this.isLoading = false;  
-                    this.highchartsOutput = response.body;
-                }, response => {
-                    this.isLoading = false;                    
-                    this.$eventBus.$emit('show-alert', "error", response.statusText); 
-                });
+                setTimeout(function(){                                                                    
+                    self.$eventBus.$emit('show-alert', "success", "Diagram retrieved successfully");   
+                    self.isLoading = false;                  
+                }, 4000); 
             }                              
                             
         },
@@ -353,10 +342,7 @@ export default {
                 a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
                 e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
                 a.dispatchEvent(e);
-            }
-
-
-            
+            }          
         },
     },
     created(){

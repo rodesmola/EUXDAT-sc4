@@ -4,7 +4,7 @@
         <v-flex xs12 pl-2 row class="hidden-md-and-down">
             <v-layout row wrap>
             <p style="color: #27304c; font-size 6px;" class="pl-2 pr-2">
-                The service will use the coordinates showed in the rigth side of the map, can be input by the user. 
+                The service will use the coordinates showed in the right side of the map, can be input by the user. 
             </p>
             </v-layout>
         </v-flex>                    

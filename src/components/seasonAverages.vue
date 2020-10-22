@@ -234,30 +234,26 @@ export default {
             this.$v.$touch()
             var url = 'http://pyapi.meteoblue.com/';
 
-            if(this.$refs.seasonAveragesForm.validate()){        
-        
-                url = url.concat('seasonAverages/', this.seasonAverages.selectedVariableOfInt, '/', this.$store.state.mapCoords.lat, '/', this.$store.state.mapCoords.long, 
-                    '/', this.seasonAverages.month_start, '/', this.seasonAverages.month_end, '/', this.API_key, '?format=', this.seasonAverages.selectedFormat,
-                    '&type=', this.seasonAverages.selectedType, '&t_base=', this.seasonAverages.t_base, '&t_max=', this.seasonAverages.t_max);
+            url = url.concat('seasonAverages/', this.seasonAverages.selectedVariableOfInt, '/', this.$store.state.mapCoords.lat, '/', this.$store.state.mapCoords.long, 
+                '/', this.seasonAverages.month_start, '/', this.seasonAverages.month_end, '/', this.API_key, '?format=', this.seasonAverages.selectedFormat,
+                '&type=', this.seasonAverages.selectedType, '&t_base=', this.seasonAverages.t_base, '&t_max=', this.seasonAverages.t_max);
 
-                if(this.seasonAverages.years_clima_start){
-                    url = url.concat('&years_clima_start=', this.seasonAverages.years_clima_start);
-                }
-                if(this.seasonAverages.years_clima_end){
-                    url = url.concat('&years_clima_end=', this.seasonAverages.years_clima_end);
-                }
-                if(this.seasonAverages.years_actual_start){
-                    url = url.concat('&years_actual_start=', this.seasonAverages.years_actual_start);
-                }
-                if(this.seasonAverages.years_actual_end){
-                    url = url.concat('&years_actual_end=', this.seasonAverages.years_actual_end);
-                }
-                if(this.seasonAverages.location_name){
-                    url = url.concat('&location_name=', this.seasonAverages.location_name);
-                }
-             
-                this.$eventBus.$emit('get-output', url, this.seasonAverages.selectedFormat); 
-            }            
+            if(this.seasonAverages.years_clima_start){
+                url = url.concat('&years_clima_start=', this.seasonAverages.years_clima_start);
+            }
+            if(this.seasonAverages.years_clima_end){
+                url = url.concat('&years_clima_end=', this.seasonAverages.years_clima_end);
+            }
+            if(this.seasonAverages.years_actual_start){
+                url = url.concat('&years_actual_start=', this.seasonAverages.years_actual_start);
+            }
+            if(this.seasonAverages.years_actual_end){
+                url = url.concat('&years_actual_end=', this.seasonAverages.years_actual_end);
+            }
+            if(this.seasonAverages.location_name){
+                url = url.concat('&location_name=', this.seasonAverages.location_name);
+            }             
+            this.$eventBus.$emit('get-output', url, this.seasonAverages.selectedFormat);         
 
         }
     },
@@ -268,5 +264,3 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 </style>
-
-

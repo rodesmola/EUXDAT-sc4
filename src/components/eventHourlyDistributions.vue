@@ -235,39 +235,36 @@ export default {
     methods: {   
         runService(){
             this.$v.$touch()
-            var url = 'http://pyapi.meteoblue.com/';
-
-            if(this.$refs.eventHourlyDistributionsForm.validate()){        
+            var url = 'http://pyapi.meteoblue.com/';     
         
-                url = url.concat('eventHourlyDistributions/', this.eventHourlyDistributions.selectedName, '/', this.$store.state.mapCoords.lat, 
-                    '/', this.$store.state.mapCoords.long, '/', this.eventHourlyDistributions.month_start, '/', 
-                    this.eventHourlyDistributions.month_end, '/', this.API_key, '?format=', this.eventHourlyDistributions.selectedFormat,
-                    '&event_aggr=', this.eventHourlyDistributions.selectedEvent.value);
+            url = url.concat('eventHourlyDistributions/', this.eventHourlyDistributions.selectedName, '/', this.$store.state.mapCoords.lat, 
+                '/', this.$store.state.mapCoords.long, '/', this.eventHourlyDistributions.month_start, '/', 
+                this.eventHourlyDistributions.month_end, '/', this.API_key, '?format=', this.eventHourlyDistributions.selectedFormat,
+                '&event_aggr=', this.eventHourlyDistributions.selectedEvent.value);
 
-                if(this.eventHourlyDistributions.years_clima_start){
-                    url = url.concat('&years_clima_start=', this.eventHourlyDistributions.years_clima_start)
-                }
-                if(this.eventHourlyDistributions.years_clima_end){
-                    url = url.concat('&years_clima_end=', this.eventHourlyDistributions.years_clima_end)
-                }
-                if(this.eventHourlyDistributions.years_actual_start){
-                    url = url.concat('&years_actual_start=', this.eventHourlyDistributions.years_actual_start)
-                }
-                if(this.eventHourlyDistributions.years_actual_end){
-                    url = url.concat('&years_actual_end=', this.eventHourlyDistributions.years_actual_end)
-                }
-                if(this.eventHourlyDistributions.location_name){
-                    url = url.concat('&location_name=', this.eventHourlyDistributions.location_name)
-                }
-                if(this.eventHourlyDistributions.threshold){
-                    url = url.concat('&threshold=', this.eventHourlyDistributions.threshold)
-                }
-                if(this.eventHourlyDistributions.duration){
-                    url = url.concat('&duration=', this.eventHourlyDistributions.duration)
-                }   
-                
-                this.$eventBus.$emit('get-output', url, this.eventHourlyDistributions.selectedFormat); 
+            if(this.eventHourlyDistributions.years_clima_start){
+                url = url.concat('&years_clima_start=', this.eventHourlyDistributions.years_clima_start)
             }
+            if(this.eventHourlyDistributions.years_clima_end){
+                url = url.concat('&years_clima_end=', this.eventHourlyDistributions.years_clima_end)
+            }
+            if(this.eventHourlyDistributions.years_actual_start){
+                url = url.concat('&years_actual_start=', this.eventHourlyDistributions.years_actual_start)
+            }
+            if(this.eventHourlyDistributions.years_actual_end){
+                url = url.concat('&years_actual_end=', this.eventHourlyDistributions.years_actual_end)
+            }
+            if(this.eventHourlyDistributions.location_name){
+                url = url.concat('&location_name=', this.eventHourlyDistributions.location_name)
+            }
+            if(this.eventHourlyDistributions.threshold){
+                url = url.concat('&threshold=', this.eventHourlyDistributions.threshold)
+            }
+            if(this.eventHourlyDistributions.duration){
+                url = url.concat('&duration=', this.eventHourlyDistributions.duration)
+            }   
+            
+            this.$eventBus.$emit('get-output', url, this.eventHourlyDistributions.selectedFormat);             
         }
     },
 

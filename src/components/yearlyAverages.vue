@@ -173,38 +173,34 @@ export default {
         runService(){
             this.$v.$touch()
             var url = 'http://pyapi.meteoblue.com/';
-
-            if(this.$refs.yearlyAveragesForm.validate()){        
-        
-                if(this.yearlyAverages.selectedName === 'Temperature'){
-                    url = url.concat('yearlyAveragesTemp/', this.yearlyAverages.selectedName, '/', this.$store.state.mapCoords.lat, '/', this.$store.state.mapCoords.long, 
-                    '/', this.yearlyAverages.selectedAggr, '/')
-                }else{
-                    url = url.concat('yearlyAveragesOther/', this.yearlyAverages.selectedName, '/', this.$store.state.mapCoords.lat, '/', this.$store.state.mapCoords.long, '/')        
-                }
-
-                url = url.concat(this.API_key, '?format=', this.yearlyAverages.selectedFormat, '&type=', this.yearlyAverages.selectedType);
-
-                if(this.yearlyAverages.years_clima_start){
-                    url = url.concat('&years_clima_start=', this.yearlyAverages.years_clima_start)
-                }
-                if(this.yearlyAverages.years_clima_end){
-                    url = url.concat('&years_clima_end=', this.yearlyAverages.years_clima_end)
-                }
-                if(this.yearlyAverages.years_actual_start){
-                    url = url.concat('&years_actual_start=', this.yearlyAverages.years_actual_start)
-                }
-                if(this.yearlyAverages.years_actual_end){
-                    url = url.concat('&years_actual_end=', this.yearlyAverages.years_actual_end)
-                }
-                if(this.yearlyAverages.location_name){
-                    url = url.concat('&location_name=', this.yearlyAverages.location_name)
-                }
-                
-                this.$eventBus.$emit('get-output', url, this.yearlyAverages.selectedFormat); 
-                
+  
+            if(this.yearlyAverages.selectedName === 'Temperature'){
+                url = url.concat('yearlyAveragesTemp/', this.yearlyAverages.selectedName, '/', this.$store.state.mapCoords.lat, '/', this.$store.state.mapCoords.long, 
+                '/', this.yearlyAverages.selectedAggr, '/')
+            }else{
+                url = url.concat('yearlyAveragesOther/', this.yearlyAverages.selectedName, '/', this.$store.state.mapCoords.lat, '/', this.$store.state.mapCoords.long, '/')        
             }
 
+            url = url.concat(this.API_key, '?format=', this.yearlyAverages.selectedFormat, '&type=', this.yearlyAverages.selectedType);
+
+            if(this.yearlyAverages.years_clima_start){
+                url = url.concat('&years_clima_start=', this.yearlyAverages.years_clima_start)
+            }
+            if(this.yearlyAverages.years_clima_end){
+                url = url.concat('&years_clima_end=', this.yearlyAverages.years_clima_end)
+            }
+            if(this.yearlyAverages.years_actual_start){
+                url = url.concat('&years_actual_start=', this.yearlyAverages.years_actual_start)
+            }
+            if(this.yearlyAverages.years_actual_end){
+                url = url.concat('&years_actual_end=', this.yearlyAverages.years_actual_end)
+            }
+            if(this.yearlyAverages.location_name){
+                url = url.concat('&location_name=', this.yearlyAverages.location_name)
+            }
+            
+            this.$eventBus.$emit('get-output', url, this.yearlyAverages.selectedFormat); 
+            
         }
     },
 

@@ -126,7 +126,7 @@ export default {
         isLoading: false,
         API_key: "1a98a8ef2598-EU-SG-testing", 
         eventDailyDistributionsValid: false,                                 
-                eventDailyDistributions: {
+        eventDailyDistributions: {
             location_name: '',
             nameArr: ['Frost', 'Icing', 'Heat waves', 'Precipitation', 'Drought', 'Tropical nights'],
             selectedName: "Precipitation",
@@ -143,13 +143,13 @@ export default {
             var_maximum: "",
             event_aggrArr: [
                 {
-                    name: 'Number of events/season',
-                    value: 'number%20of%20events%20%2F%20season'
+                    name: 'Number of days/season',
+                    value: 'number%20of%20days%20%2F%20season'
                 }
             ],
             selectedEvent:{
-                name: 'Number of events/season',
-                value: 'number%20of%20events%20%2F%20season'
+                name: 'Number of days/season',
+                value: 'number%20of%20days%20%2F%20season'
             },     
         },
     }),
@@ -234,41 +234,38 @@ export default {
     methods: {   
         runService(){
             this.$v.$touch()
-            var url = 'http://pyapi.meteoblue.com/';
-
-            if(this.$refs.eventDailyDistributionsForm.validate()){        
+            var url = 'http://pyapi.meteoblue.com/';    
         
-                url = url.concat('eventDailyDistributions/', this.eventDailyDistributions.selectedName, '/', this.$store.state.mapCoords.lat, 
-                    '/', this.$store.state.mapCoords.long, '/', this.eventDailyDistributions.month_start, '/', this.eventDailyDistributions.month_end, '/', 
-                    this.API_key, '?format=', this.eventDailyDistributions.selectedFormat, '&event_aggr=', this.eventDailyDistributions.selectedEvent.value);
+            url = url.concat('eventDailyDistributions/', this.eventDailyDistributions.selectedName, '/', this.$store.state.mapCoords.lat, 
+                '/', this.$store.state.mapCoords.long, '/', this.eventDailyDistributions.month_start, '/', this.eventDailyDistributions.month_end, '/', 
+                this.API_key, '?format=', this.eventDailyDistributions.selectedFormat, '&event_aggr=', this.eventDailyDistributions.selectedEvent.value);
 
-                if(this.eventDailyDistributions.years_clima_start){
-                    url = url.concat('&years_clima_start=', this.eventDailyDistributions.years_clima_start)
-                }
-                if(this.eventDailyDistributions.years_clima_end){
-                    url = url.concat('&years_clima_end=', this.eventDailyDistributions.years_clima_end)
-                }
-                if(this.eventDailyDistributions.years_actual_start){
-                    url = url.concat('&years_actual_start=', this.eventDailyDistributions.years_actual_start)
-                }
-                if(this.eventDailyDistributions.years_actual_end){
-                    url = url.concat('&years_actual_end=', this.eventDailyDistributions.years_actual_end)
-                }
-                if(this.eventDailyDistributions.location_name){
-                    url = url.concat('&location_name=', this.eventDailyDistributions.location_name)
-                }
-                if(this.eventDailyDistributions.threshold){
-                    url = url.concat('&threshold=', this.eventDailyDistributions.threshold)
-                }
-                if(this.eventDailyDistributions.duration){
-                    url = url.concat('&duration=', this.eventDailyDistributions.duration)
-                }
-                if(this.eventDailyDistributions.var_maximum){
-                    url = url.concat('&var_maximum=', this.eventDailyDistributions.var_maximum)
-                }              
-                
-                this.$eventBus.$emit('get-output', url, this.eventDailyDistributions.selectedFormat); 
+            if(this.eventDailyDistributions.years_clima_start){
+                url = url.concat('&years_clima_start=', this.eventDailyDistributions.years_clima_start)
             }
+            if(this.eventDailyDistributions.years_clima_end){
+                url = url.concat('&years_clima_end=', this.eventDailyDistributions.years_clima_end)
+            }
+            if(this.eventDailyDistributions.years_actual_start){
+                url = url.concat('&years_actual_start=', this.eventDailyDistributions.years_actual_start)
+            }
+            if(this.eventDailyDistributions.years_actual_end){
+                url = url.concat('&years_actual_end=', this.eventDailyDistributions.years_actual_end)
+            }
+            if(this.eventDailyDistributions.location_name){
+                url = url.concat('&location_name=', this.eventDailyDistributions.location_name)
+            }
+            if(this.eventDailyDistributions.threshold){
+                url = url.concat('&threshold=', this.eventDailyDistributions.threshold)
+            }
+            if(this.eventDailyDistributions.duration){
+                url = url.concat('&duration=', this.eventDailyDistributions.duration)
+            }
+            if(this.eventDailyDistributions.var_maximum){
+                url = url.concat('&var_maximum=', this.eventDailyDistributions.var_maximum)
+            }            
+            
+            this.$eventBus.$emit('get-output', url, this.eventDailyDistributions.selectedFormat);         
 
         }
     },

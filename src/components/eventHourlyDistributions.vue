@@ -140,7 +140,7 @@ export default {
                 name: 'Number of events/season',
                 value: 'number%20of%20events%20%2F%20season'
             },             
-            formatArr: ['png', 'json', 'highchartsHtml'],
+            formatArr: ['png'],// ['png', 'json', 'highchartsHtml'],
             selectedFormat: 'png',
             years_clima_start:"",
             years_clima_end: "",

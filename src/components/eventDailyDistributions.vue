@@ -131,7 +131,7 @@ export default {
             nameArr: ['Frost', 'Icing', 'Heat waves', 'Precipitation', 'Drought', 'Tropical nights'],
             selectedName: "Precipitation",
             selectedFormat: 'png',
-            formatArr: ['png', 'json', 'highchartsHtml'],
+            formatArr: ['png'],// ['png', 'json', 'highchartsHtml'],
             month_start: 5,
             month_end: 10,
             years_clima_start:"",

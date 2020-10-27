@@ -2,13 +2,6 @@
 
     <v-form ref="seasonAveragesForm" v-model="seasonAveragesValid">
         <v-layout row wrap>
-            <!-- <p style="color: grey; font-size 8px; margin-bottom: 5px;" class="pl-3 pr-3">
-                <b>Season averages:</b>
-                The Season averages diagram shows the comparison, along a customisable growing season, 
-                of average curves of the selected weather variable relative to two different time periods 
-                (typically the last 10 years vs 10 years of the past). The distributions compare the 
-                Kernel Density Estimation for the two selected time periods.
-            </p> -->
 
             <v-flex xs8 sm8 md6 lg8 xlg8 class="pl-3 pr-3">
                 <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="seasonAverages.location_name" :value="seasonAverages.location_name"
@@ -131,12 +124,14 @@
 </template>
 
 <script>
-import { required, between, numeric, decimal } from 'vuelidate/lib/validators'
+import { required, between, numeric, decimal } from 'vuelidate/lib/validators';
+import CONST from "../const";
 export default {
     name: "seasonAverages",    
-    data: () => ({        
+    data: () => ({      
+        baseAPIurl: CONST.baseAPIurl,        
+        API_key: CONST.API_key,             
         isLoading: false,
-        API_key: "1a98a8ef2598-EU-SG-testing", 
         seasonAveragesValid: false,                                 
         seasonAverages:{
             variableOfInterestArr: ['GDD', 'Precipitation', 'Radiation', 'Evapotranspiration'],
@@ -159,6 +154,33 @@ export default {
         }
 
     }),
+    methods: {   
+        runService(){
+            this.$v.$touch()           
+
+            var url = this.baseAPIurl.concat('seasonAverages/', this.seasonAverages.selectedVariableOfInt, '/', this.$store.state.mapCoords.lat, '/', this.$store.state.mapCoords.long, 
+                '/', this.seasonAverages.month_start, '/', this.seasonAverages.month_end, '/', this.API_key, '?format=', this.seasonAverages.selectedFormat,
+                '&type=', this.seasonAverages.selectedType, '&t_base=', this.seasonAverages.t_base, '&t_max=', this.seasonAverages.t_max);
+
+            if(this.seasonAverages.years_clima_start){
+                url = url.concat('&years_clima_start=', this.seasonAverages.years_clima_start);
+            }
+            if(this.seasonAverages.years_clima_end){
+                url = url.concat('&years_clima_end=', this.seasonAverages.years_clima_end);
+            }
+            if(this.seasonAverages.years_actual_start){
+                url = url.concat('&years_actual_start=', this.seasonAverages.years_actual_start);
+            }
+            if(this.seasonAverages.years_actual_end){
+                url = url.concat('&years_actual_end=', this.seasonAverages.years_actual_end);
+            }
+            if(this.seasonAverages.location_name){
+                url = url.concat('&location_name=', this.seasonAverages.location_name);
+            }             
+            this.$eventBus.$emit('get-output', url, this.seasonAverages.selectedFormat);         
+
+        }
+    },    
     validations: {
        seasonAverages:{       
             month_start: {required, between: between(0, 12), numeric},
@@ -229,35 +251,6 @@ export default {
             return errors
         },                  
     },
-    methods: {   
-        runService(){
-            this.$v.$touch()
-            var url = 'http://pyapi.meteoblue.com/';
-
-            url = url.concat('seasonAverages/', this.seasonAverages.selectedVariableOfInt, '/', this.$store.state.mapCoords.lat, '/', this.$store.state.mapCoords.long, 
-                '/', this.seasonAverages.month_start, '/', this.seasonAverages.month_end, '/', this.API_key, '?format=', this.seasonAverages.selectedFormat,
-                '&type=', this.seasonAverages.selectedType, '&t_base=', this.seasonAverages.t_base, '&t_max=', this.seasonAverages.t_max);
-
-            if(this.seasonAverages.years_clima_start){
-                url = url.concat('&years_clima_start=', this.seasonAverages.years_clima_start);
-            }
-            if(this.seasonAverages.years_clima_end){
-                url = url.concat('&years_clima_end=', this.seasonAverages.years_clima_end);
-            }
-            if(this.seasonAverages.years_actual_start){
-                url = url.concat('&years_actual_start=', this.seasonAverages.years_actual_start);
-            }
-            if(this.seasonAverages.years_actual_end){
-                url = url.concat('&years_actual_end=', this.seasonAverages.years_actual_end);
-            }
-            if(this.seasonAverages.location_name){
-                url = url.concat('&location_name=', this.seasonAverages.location_name);
-            }             
-            this.$eventBus.$emit('get-output', url, this.seasonAverages.selectedFormat);         
-
-        }
-    },
-
 };
 </script>
 

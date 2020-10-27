@@ -19,10 +19,6 @@ export default {
     logout: function(){
       this.$keycloak.logoutFn();
     }
-  },
-  created(){
-    // var user = JSON.parse(window.atob(this.$keycloak.token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
-    // this.user = user;
   }
 }
 </script>

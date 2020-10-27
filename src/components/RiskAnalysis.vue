@@ -3,7 +3,7 @@
     <div>        
         <v-flex xs12 pl-2 row class="hidden-md-and-down">
             <v-layout row wrap>
-            <p style="color: #27304c; font-size 6px;" class="pl-3 pr-3">
+            <p style="color: #27304c; font-size 6px;" class="pl-3 pr-3 hidden-lg-and-down">
                 The service will use the coordinates showed in the rigth side of the map, can be input by the user.                 
                 <a @click="infoDialog = true">More info.</a>
             </p>
@@ -130,11 +130,16 @@
                         </v-text-field> 
                     </v-flex>
 
-                    <v-flex xs12 sm12 md12 lg12 class="text-xs-right pr-2" style="padding: 0px; margin-bottom: 5px;">
-                        <v-btn small round color="#27304c" :disabled="!riskAnalysisValid" :loading="isLoading" dark @click="runService()" title="Run service" >
-                        RUN
-                        </v-btn>
-                    </v-flex>
+                <v-flex xs3 class="text-xs-right pr-3 mt-3 hidden-xl-only" style="padding: 0px; margin-bottom: 5px; ">
+                    <v-btn fab dark small color="#27304c" :disabled="!riskAnalysisValid" :loading="isLoading" @click="runService()" title="Run service">
+                        <v-icon dark>play_arrow</v-icon>
+                    </v-btn>
+                </v-flex>
+                 <v-flex xs12 class="text-xs-right pr-3 hidden-lg-and-down" style="padding: 0px; margin-bottom: 5px;">
+                    <v-btn small round color="#27304c" :disabled="!riskAnalysisValid" :loading="isLoading" dark @click="runService()" title="Run service" >
+                    RUN
+                    </v-btn>
+                </v-flex> 
 
                 </v-layout>
             </v-form> 
@@ -216,7 +221,6 @@
                         <img style="width: 750px;" src="../assets/riskAnalysisTable.png" alt="">
                     </v-flex>   
                                     
-
                     <v-flex xs12  class="pa-3" v-if="format === 'highchartsHtml'"> 
                         <iframe 
                             width="100%"
@@ -247,11 +251,13 @@
 <script>
 
 import { decimal, between, numeric } from 'vuelidate/lib/validators'
+import CONST from "../const";
 export default {
     name: "RiskAnalysis",    
     data: () => ({
+        baseAPIurl: CONST.baseAPIurl,        
+        API_key: CONST.API_key,
         riskAnalysisValid: false,
-        API_key: "1a98a8ef2598-EU-SG-testing",
         isLoading: false,
         outputDialog: false,   
         infoDialog: false, 
@@ -278,6 +284,100 @@ export default {
             location_name: '',
         }    
     }),
+    methods: {
+         /**
+        * Create the url to acces the output mb diagram
+        *        
+        * @public
+        */
+        runService(){
+            
+            this.isLoading = true; 
+                       
+            var url = this.baseAPIurl.concat('cropClimateRisk/', 
+                this.riskAnalysis.eventRiskSelected + '/' + 
+                this.riskAnalysis.cropOfInterestSelected + '/' + 
+                this.$store.state.mapCoords.lat + '/' + 
+                this.$store.state.mapCoords.long + '/' + 
+                this.API_key + '?' +
+                'format=' + this.riskAnalysis.formatSelected +
+                '&years_start=' + this.riskAnalysis.years_start +
+                '&years_end=' + this.riskAnalysis.years_end +
+                '&drought_duration=' + this.riskAnalysis.drought_duration +
+                '&frost_threshold=' + this.riskAnalysis.frost_threshold +
+                '&frost_duration=' + this.riskAnalysis.frost_duration
+            )
+
+            if(this.riskAnalysis.month_start){
+                url = url.concat('&month_start=', this.riskAnalysis.month_start)
+            }
+            if(this.riskAnalysis.month_end){    
+                url = url.concat('&month_end=', this.riskAnalysis.month_end)
+            }
+            if(this.riskAnalysis.t_base){    
+                url = url.concat('&T_base=', this.riskAnalysis.t_base)
+            }
+            if(this.riskAnalysis.t_max){    
+                url = url.concat('&T_max=', this.riskAnalysis.t_max)
+            }
+            if(this.riskAnalysis.soil_water_capacity){    
+                url = url.concat('&soil_water_capacity=', this.riskAnalysis.soil_water_capacity)
+            }
+            if(this.riskAnalysis.drought_threshold){    
+                url = url.concat('&drought_threshold=', this.riskAnalysis.drought_threshold)
+            }
+            if(this.riskAnalysis.location_name){    
+                url = url.concat('&location_name=', this.riskAnalysis.location_name)
+            }           
+
+           this.getOutput(url, this.riskAnalysis.formatSelected);
+        },
+        getOutput(url, format){
+                
+            this.outputDialog = true;
+            this.grahpURL = url;
+            this.format = format;
+            var self = this;           
+
+            if(format === 'json'){
+                this.$http.get(url).then(response => {                             
+                    this.outputjson = response.body;    
+                    this.isLoading = false;         
+                    self.$eventBus.$emit('show-alert', "success", "JSON retrieved successfully");                           
+                }, response => {
+                    this.isLoading = false;                    
+                    this.$eventBus.$emit('show-alert', "error", response.statusText); 
+                });
+
+            }else{
+                setTimeout(function(){                                                                    
+                    self.$eventBus.$emit('show-alert', "success", "Diagram retrieved successfully");   
+                    self.isLoading = false;                  
+                }, 4000); 
+            }                              
+                            
+        },
+        /**
+        * Open the image in other browser tab to force to be download
+        *
+        * @public
+        */
+        downloadOutput(format){
+            if(format === 'png'){
+                window.open(this.grahpURL)  
+            }else{
+                var data = JSON.stringify(this.outputjson)
+                var blob = new Blob([data], {type: 'text/plain'})
+                var e = document.createEvent('MouseEvents'),
+                a = document.createElement('a');
+                a.download = "output.json";
+                a.href = window.URL.createObjectURL(blob);
+                a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
+                e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+                a.dispatchEvent(e);
+            }           
+        },              
+    },    
     validations: {
         riskAnalysis:{       
             month_start: {between: between(0, 12), numeric},        
@@ -364,109 +464,7 @@ export default {
             !this.$v.riskAnalysis.t_max.decimal && errors.push('Insert a number')
             return errors
         },              
-    },
-    methods: {
-         /**
-        * Create the url to acces the output mb diagram
-        *        
-        * @public
-        */
-        runService(){
-            
-            this.isLoading = true; 
-                       
-            var url = "http://pyapi.meteoblue.com/cropClimateRisk/".concat(
-                this.riskAnalysis.eventRiskSelected + '/' + 
-                this.riskAnalysis.cropOfInterestSelected + '/' + 
-                this.$store.state.mapCoords.lat + '/' + 
-                this.$store.state.mapCoords.long + '/' + 
-                this.API_key + '?' +
-                'format=' + this.riskAnalysis.formatSelected +
-                '&years_start=' + this.riskAnalysis.years_start +
-                '&years_end=' + this.riskAnalysis.years_end +
-                '&drought_duration=' + this.riskAnalysis.drought_duration +
-                '&frost_threshold=' + this.riskAnalysis.frost_threshold +
-                '&frost_duration=' + this.riskAnalysis.frost_duration
-            )
-
-            if(this.riskAnalysis.month_start){
-                url = url.concat('&month_start=', this.riskAnalysis.month_start)
-            }
-            if(this.riskAnalysis.month_end){    
-                url = url.concat('&month_end=', this.riskAnalysis.month_end)
-            }
-            if(this.riskAnalysis.t_base){    
-                url = url.concat('&T_base=', this.riskAnalysis.t_base)
-            }
-            if(this.riskAnalysis.t_max){    
-                url = url.concat('&T_max=', this.riskAnalysis.t_max)
-            }
-            if(this.riskAnalysis.soil_water_capacity){    
-                url = url.concat('&soil_water_capacity=', this.riskAnalysis.soil_water_capacity)
-            }
-            if(this.riskAnalysis.drought_threshold){    
-                url = url.concat('&drought_threshold=', this.riskAnalysis.drought_threshold)
-            }
-            if(this.riskAnalysis.location_name){    
-                url = url.concat('&location_name=', this.riskAnalysis.location_name)
-            }           
-
-           this.getOutput(url, this.riskAnalysis.formatSelected);
-        },
-        getOutput(url, format){
-                
-            this.outputDialog = true;
-            this.grahpURL = url;
-            this.format = format;
-            var self = this;           
-
-            if(format === 'json'){
-                this.$http.get(url).then(response => {                             
-                    this.outputjson = response.body;    
-                    this.isLoading = false;         
-                    self.$eventBus.$emit('show-alert', "success", "JSON retrieved successfully");                           
-                }, response => {
-                    this.isLoading = false;                    
-                    this.$eventBus.$emit('show-alert', "error", response.statusText); 
-                });
-
-            }else{
-                setTimeout(function(){                                                                    
-                    self.$eventBus.$emit('show-alert', "success", "Diagram retrieved successfully");   
-                    self.isLoading = false;                  
-                }, 4000); 
-            }                              
-                            
-        },
-        /**
-        * Open the image in other browser tab to force to be download
-        *
-        * @public
-        */
-        downloadOutput(format){
-            if(format === 'png'){
-                window.open(this.grahpURL)  
-            }else{
-                var data = JSON.stringify(this.outputjson)
-                var blob = new Blob([data], {type: 'text/plain'})
-                var e = document.createEvent('MouseEvents'),
-                a = document.createElement('a');
-                a.download = "output.json";
-                a.href = window.URL.createObjectURL(blob);
-                a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
-                e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-                a.dispatchEvent(e);
-            }           
-        },              
-    },
-    filters: {
-        truncate: function(value) {
-            if(value != undefined){
-                value = value.toString().substring(0, 8);
-            }
-            return value
-        }
-    },
+    }
 };
 </script>
 

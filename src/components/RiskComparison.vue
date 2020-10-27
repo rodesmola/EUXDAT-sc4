@@ -1,13 +1,6 @@
 <template>
     <div>  
         <v-layout row wrap>       
-            <!-- <v-flex xs12 pl-2 row class="hidden-md-and-down">
-                <v-layout row wrap>
-                <p style="color: #27304c; font-size 6px;" class="pl-2 pr-2">
-                    Select an analisys to run for the coordinates showed on top of the map. Then click the "run" button to display the result. 
-                </p>
-                </v-layout>
-            </v-flex>                     -->
 
             <v-flex sm9 xs9 md9 class="pl-3 pr-3">
                 <v-combobox style="margin-top: 0px; padding-top: 0px"
@@ -321,8 +314,7 @@ export default {
                     self.$eventBus.$emit('show-alert', "success", "Diagram retrieved successfully");   
                     self.isLoading = false;                  
                 }, 4000); 
-            }                              
-                            
+            }                                                          
         },
         /**
         * Open the image in other browser tab to force to be download
@@ -346,19 +338,15 @@ export default {
         },
     },
     created(){
-
         this.$eventBus.$on('get-output', (url, format)  => {
             this.getOutput(url, format);
         });
-
     },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
-
 	
 .wrapper {
     position: relative;

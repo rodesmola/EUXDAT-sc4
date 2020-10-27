@@ -171,15 +171,14 @@
 
 <script>
 
-import moment from 'moment';
 import { required, numeric } from 'vuelidate/lib/validators'
+import CONST from "../const";
 
 export default {
-    name: "ClimaticPatterns",
-    props: {},
+    name: "ClimaticPatterns",    
     data: () => ({        
-
-        API_key: "8vh83gfhu34g",
+        climaticPatternsURL: CONST.climaticPatternsURL,
+        climaticPatternsAPI_key: CONST.climaticPatternsAPI_key,
         mbServices: [
         {
             'name': 'Cold event analysis',
@@ -215,6 +214,92 @@ export default {
         mbDialog: false,
         isLoading: false,
     }),
+    methods: {
+        /**
+        * Create the url to acces the output mb diagram
+        *
+        * @param {string} service
+        * @public
+        */
+        mbService(service){
+
+            var self = this;
+                                   
+            var url = this.climaticPatternsURL.concat(service.value,
+            '&lat=', this.$store.state.mapCoords.lat, '&lon=', this.$store.state.mapCoords.long, '&apikey=', this.climaticPatternsAPI_key);
+
+            if(service.value === 'history_frostrisk?'){
+                if(!this.$v.cold_tmp_threshold.$invalid && !this.$v.cold_dur_threshold.$invalid){
+                    this.grahpURL = url.concat('&thr=', this.cold_tmp_threshold, '&frostlength=', this.cold_dur_threshold);
+                    this.isValid = true;
+                }else{
+                    this.isValid = false;
+                }                
+            }else if (service.value === 'history_heatrisk?') {
+                if(!this.$v.warn_tmp_threshold.$invalid && !this.$v.warn_dur_threshold.$invalid){
+                    this.grahpURL = url.concat('&thr=', this.warn_tmp_threshold, '&frostlength=', this.warn_dur_threshold);
+                    this.isValid = true;
+                }else{
+                    this.isValid = false;
+                }                
+            }else if (service.value === 'history_preciprisk?') {
+                if(!this.$v.prec_threshold.$invalid){
+                    this.grahpURL = url.concat('&thr=', this.prec_threshold);
+                    this.isValid = true;
+                }else{
+                    this.isValid = false;
+                }                
+            }else if (service.value === 'history_watercapacity?') {
+                if(!this.$v.wat_cap_threshold.$invalid){
+                    this.grahpURL = url.concat('&thr=', this.wat_cap_threshold);
+                    this.isValid = true;
+                }else{
+                    this.isValid = false;
+                }                 
+            }else if (service.value === 'history_cloudcover?') {
+                if(!this.$v.cloud_cvr_threshold.$invalid){
+                    this.grahpURL = url.concat('&thr=', this.cloud_cvr_threshold);
+                    this.isValid = true;
+                }else{
+                    this.isValid = false;
+                }                   
+            }
+
+            if(this.isValid){
+                this.isLoading = true; 
+                this.$http.get(this.graphURL).then(response => {                                    
+                    setTimeout(function(){ 
+                        self.isLoading = false;                                                 
+                        self.$eventBus.$emit('show-alert', "success", response.statusText + ": Diagram retrieved successfully"); 
+                        self.mbDialog = true;
+                    }, 4000);                           
+                }, response => {
+                    this.isLoading = false;                    
+                    this.$eventBus.$emit('show-alert', "error", response.statusText); 
+                });
+            }else{
+                this.$eventBus.$emit('show-alert', "error", "Please insert correct values"); 
+            }
+        
+        },//mbService
+        /**
+        * Open the image in other browser tab to force to be download
+        *
+        * @public
+        */
+        downloadGraph(){
+            window.open(this.grahpURL)  
+        },
+        resetForm(){
+            this.cold_tmp_threshold= 1
+            this.cold_dur_threshold = 1
+            this.warn_tmp_threshold = 30
+            this.warn_dur_threshold = 1
+            this.prec_threshold = 30
+            this.wat_cap_threshold = 100
+            this.cloud_cvr_threshold = 15
+        }
+    },    
     validations: {
         cold_tmp_threshold: {required, numeric},
         cold_dur_threshold: {required, numeric},
@@ -275,100 +360,6 @@ export default {
             return errors
         },                                
     },    
-    methods: {
-        /**
-        * Create the url to acces the output mb diagram
-        *
-        * @param {string} service
-        * @public
-        */
-        mbService(service){
-
-            var self = this;
-                                   
-            var url = 'http://my.meteoblue.com/visimage/'.concat(service.value,
-            '&lat=', this.$store.state.mapCoords.lat, '&lon=', this.$store.state.mapCoords.long, '&apikey=', this.API_key);
-
-            if(service.value === 'history_frostrisk?'){
-                if(!this.$v.cold_tmp_threshold.$invalid && !this.$v.cold_dur_threshold.$invalid){
-                    this.grahpURL = url.concat('&thr=', this.cold_tmp_threshold, '&frostlength=', this.cold_dur_threshold);
-                    this.isValid = true;
-                }else{
-                    this.isValid = false;
-                }                
-            }else if (service.value === 'history_heatrisk?') {
-                if(!this.$v.warn_tmp_threshold.$invalid && !this.$v.warn_dur_threshold.$invalid){
-                    this.grahpURL = url.concat('&thr=', this.warn_tmp_threshold, '&frostlength=', this.warn_dur_threshold);
-                    this.isValid = true;
-                }else{
-                    this.isValid = false;
-                }                
-            }else if (service.value === 'history_preciprisk?') {
-                if(!this.$v.prec_threshold.$invalid){
-                    this.grahpURL = url.concat('&thr=', this.prec_threshold);
-                    this.isValid = true;
-                }else{
-                    this.isValid = false;
-                }                
-            }else if (service.value === 'history_watercapacity?') {
-                if(!this.$v.wat_cap_threshold.$invalid){
-                    this.grahpURL = url.concat('&thr=', this.wat_cap_threshold);
-                    this.isValid = true;
-                }else{
-                    this.isValid = false;
-                }                 
-            }else if (service.value === 'history_cloudcover?') {
-                if(!this.$v.cloud_cvr_threshold.$invalid){
-                    this.grahpURL = url.concat('&thr=', this.cloud_cvr_threshold);
-                    this.isValid = true;
-                }else{
-                    this.isValid = false;
-                }                   
-            }
-
-            if(this.isValid){
-                this.isLoading = true; 
-                this.$http.get(this.graphURL).then(response => {                                    
-                    setTimeout(function(){ 
-                        self.isLoading = false;                                                 
-                        self.$eventBus.$emit('show-alert', "success", "Diagram retrieved successfully"); 
-                        self.mbDialog = true;
-                    }, 4000);                           
-                }, response => {
-                    this.isLoading = false;                    
-                    this.$eventBus.$emit('show-alert', "error", response.statusText); 
-                });
-            }else{
-                this.$eventBus.$emit('show-alert', "error", "Please insert correct values"); 
-            }
-        
-        },//mbService
-        /**
-        * Open the image in other browser tab to force to be download
-        *
-        * @public
-        */
-        downloadGraph(){
-            window.open(this.grahpURL)  
-        },
-        resetForm(){
-            this.cold_tmp_threshold= 1
-            this.cold_dur_threshold = 1
-            this.warn_tmp_threshold = 30
-            this.warn_dur_threshold = 1
-            this.prec_threshold = 30
-            this.wat_cap_threshold = 100
-            this.cloud_cvr_threshold = 15
-        }
-    },
-    filters: {
-        truncate: function(value) {
-            if(value != undefined){
-                value = value.toString().substring(0, 8);
-            }
-            return value
-        }
-    }
 
 };
 </script>

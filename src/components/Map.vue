@@ -70,11 +70,11 @@
                       <template v-slot:header >                        
                         <div class="exp-tittle" @click="updateComponent(i)">{{item.name}}</div>                      
                       </template>              
-                      <div v-if="i === 0" :key="componetRAkey">
-                        <RiskAnalysis/>
-                      </div>  
-                      <div v-if="i === 1" :key="componetRCkey">
+                      <div v-if="i === 0" :key="componetRCkey">
                         <RiskComparison/>
+                      </div>  
+                      <div v-if="i === 1" :key="componetRAkey">                        
+                        <RiskAnalysis/>
                       </div>                                                  
                       <div v-if="i === 2" :key="componetCPkey">
                         <ClimaticPatterns/>
@@ -177,7 +177,6 @@ import View from 'ol/View.js';
 import {Tile as TileLayer, Vector as VectorLayer} from 'ol/layer.js';
 import {Vector as VectorSource} from 'ol/source.js'
 import {Fill, Stroke, Style} from 'ol/style.js';
-import moment from 'moment';
 import OSM from 'ol/source/OSM';
 import BingMaps from 'ol/source/BingMaps.js';
 import {required, decimal, between} from 'vuelidate/lib/validators'
@@ -199,8 +198,8 @@ export default {
     mapCoordsValid: false,
     selectedBaseLayer: 'aerial',
     panels: [
-      {"name": "Crop climate risk analysis"},
       {"name": "Crop climate risk Comparison"},
+      {"name": "Crop climate risk analysis"},      
       {"name": "Cimatic patterns"}
     ],   
     isAlert: false,
@@ -213,9 +212,7 @@ export default {
       lat: 0,
       long: 0,
     },
-    inputNumRules: [            
-        v => (v && /^\d+(\.\d{1,20})?$/.test(v)) || ''
-    ],  
+
   }),
   methods: {
     /**
@@ -226,11 +223,11 @@ export default {
     */
     updateComponent(i){
       if(i === 0){
-          this.componetRAkey ++
-          //this.$eventBus.$emit('updateComponetRA', this.componetRAkey);
+        this.componetRCkey ++
+        //this.$eventBus.$emit('updateComponetRA', this.componetRAkey);
       }else if (i === 1){
-           this.componetRCkey ++
-      //     this.$eventBus.$emit('updateComponetMZ', this.componetMZkey);
+        this.componetRAkey ++
+        //this.$eventBus.$emit('updateComponetMZ', this.componetMZkey);
       }else {
         this.componetCPkey ++
       } 
@@ -402,15 +399,6 @@ export default {
       this.showAlert(type, msg);
     });
 
-    // this.$eventBus.$on('show-outputPanel', (bool, dates)  => {
-    //   this.outputPanel = bool;
-    //   this.outputDates = dates;      
-    // });
-
-    // this.$eventBus.$on('updateComponetRoot', (i)  => {
-    //   this.updateComponent(i);      
-    // });
-
   },
   validations: {
     mapCoords: {
@@ -435,19 +423,6 @@ export default {
       !this.$v.mapCoords.long.decimal && errors.push('Insert a number')
       return errors
     },
-  },
-  filters: {
-    truncate: function(value) {
-      if(value != undefined){
-        value = value.toString().substring(0, 2);
-      }
-      return value
-    },
-    formatDate: function(value) {
-      if (value) {
-        return moment(String(value)).format('MM/DD/YYYY hh:mm')
-      }
-    }
   }
 }
 </script>

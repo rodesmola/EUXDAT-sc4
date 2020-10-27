@@ -51,50 +51,57 @@
                 ></v-combobox>
             </v-flex>                
             <v-flex xs3 class="pl-3 pr-3">
-                <v-text-field hide-no-data hide-selected dense color="#77b942" type="number" v-model="yearlyAverages.years_clima_start" 
+                <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="yearlyAverages.years_clima_start" 
                     :value="yearlyAverages.years_clima_start" label="First year comp." title="First year of past comparison period, from 1985 onwards." 
                     @input="$v.yearlyAverages.years_clima_start.$touch()" @blur="$v.yearlyAverages.years_clima_start.$touch()"
                     :error-messages="years_clima_startErrors"> 
                 </v-text-field>
             </v-flex>  
             <v-flex xs3 class="pl-3 pr-3">
-                <v-text-field hide-no-data hide-selected dense color="#77b942" type="number" v-model="yearlyAverages.years_clima_end" 
+                <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="yearlyAverages.years_clima_end" 
                     :value="yearlyAverages.years_clima_end" label="Last year comp." title="Last year of past comparison period." 
                     @input="$v.yearlyAverages.years_clima_end.$touch()" @blur="$v.yearlyAverages.years_clima_end.$touch()"
                     :error-messages="years_clima_endErrors">
                 </v-text-field>
             </v-flex>   
             <v-flex xs3 class="pl-3 pr-3">
-                <v-text-field hide-no-data hide-selected dense color="#77b942" type="number" v-model="yearlyAverages.years_actual_start" 
+                <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="yearlyAverages.years_actual_start" 
                     :value="yearlyAverages.years_actual_start" label="First year of recent comp." title="First year of recent comparison period, from 1985 onwards."
                     @input="$v.yearlyAverages.years_actual_start.$touch()" @blur="$v.yearlyAverages.years_actual_start.$touch()"
                     :error-messages="years_actual_startErrors">
                 </v-text-field>
             </v-flex>            
             <v-flex xs3 class="pl-3 pr-3">
-                <v-text-field hide-no-data hide-selected dense color="#77b942" type="number" v-model="yearlyAverages.years_actual_end" 
+                <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="yearlyAverages.years_actual_end" 
                     :value="yearlyAverages.years_actual_end" label="Last year of recent comp." title="Last year of recent comparison period." 
                     @input="$v.yearlyAverages.years_actual_end.$touch()" @blur="$v.yearlyAverages.years_actual_end.$touch()"
                     :error-messages="years_actual_endErrors">
                 </v-text-field>                    
             </v-flex>   
-            <v-flex xs6 sm6 md6 lg6 class="text-xs-right mt-3 pr-2" style="padding: 0px; margin-bottom: 5px;">
+            <v-flex xs6 sm6 md6 lg6 class="text-xs-right mt-3 pr-2" style="padding: 0px; margin-bottom: 5px;" v-if="yearlyAverages.selectedName === 'Temperature'">
                 <v-btn small round color="#27304c" :disabled="!yearlyAveragesValid" :loading="isLoading" dark @click="runService()" title="Run service" >
                 RUN
                 </v-btn>
             </v-flex> 
+          <v-flex xs12 class="text-xs-right pr-2" style="padding: 0px; margin-bottom: 5px;" v-if="yearlyAverages.selectedName != 'Temperature'">
+                <v-btn small round color="#27304c" :disabled="!yearlyAveragesValid" :loading="isLoading" dark @click="runService()" title="Run service" >
+                RUN
+                </v-btn>
+            </v-flex>             
         </v-layout>
     </v-form>       
 
 </template>
 
 <script>
-import {between, numeric} from 'vuelidate/lib/validators'
+import {between, numeric} from 'vuelidate/lib/validators';
+import CONST from "../const";
 export default {
     name: "yearlyAverages",    
-    data: () => ({        
-        isLoading: false,
-        API_key: "1a98a8ef2598-EU-SG-testing", 
+    data: () => ({       
+        baseAPIurl: CONST.baseAPIurl,        
+        API_key: CONST.API_key,   
+        isLoading: false,        
         yearlyAveragesValid: false,                                 
         yearlyAverages: {
             location_name: '',
@@ -115,6 +122,41 @@ export default {
         },
 
     }),
+    methods: {   
+        runService(){
+            this.$v.$touch()
+            
+            var url;
+  
+            if(this.yearlyAverages.selectedName === 'Temperature'){
+                url = this.baseAPIurl.concat('yearlyAveragesTemp/', this.yearlyAverages.selectedName, '/', this.$store.state.mapCoords.lat, '/', this.$store.state.mapCoords.long, 
+                '/', this.yearlyAverages.selectedAggr, '/')
+            }else{
+                url = this.baseAPIurl.concat('yearlyAveragesOther/', this.yearlyAverages.selectedName, '/', this.$store.state.mapCoords.lat, '/', this.$store.state.mapCoords.long, '/')        
+            }
+
+            url = url.concat(this.API_key, '?format=', this.yearlyAverages.selectedFormat, '&type=', this.yearlyAverages.selectedType);
+
+            if(this.yearlyAverages.years_clima_start){
+                url = url.concat('&years_clima_start=', this.yearlyAverages.years_clima_start)
+            }
+            if(this.yearlyAverages.years_clima_end){
+                url = url.concat('&years_clima_end=', this.yearlyAverages.years_clima_end)
+            }
+            if(this.yearlyAverages.years_actual_start){
+                url = url.concat('&years_actual_start=', this.yearlyAverages.years_actual_start)
+            }
+            if(this.yearlyAverages.years_actual_end){
+                url = url.concat('&years_actual_end=', this.yearlyAverages.years_actual_end)
+            }
+            if(this.yearlyAverages.location_name){
+                url = url.concat('&location_name=', this.yearlyAverages.location_name)
+            }
+            
+            this.$eventBus.$emit('get-output', url, this.yearlyAverages.selectedFormat); 
+            
+        }
+    },    
     validations: {
        yearlyAverages:{       
             years_clima_start: {between: between(1985, 2020), numeric},  
@@ -168,42 +210,7 @@ export default {
             !this.$v.yearlyAverages.years_actual_end.numeric && errors.push('Insert a number')
             return errors
         },                  
-    },
-    methods: {   
-        runService(){
-            this.$v.$touch()
-            var url = 'http://pyapi.meteoblue.com/';
-  
-            if(this.yearlyAverages.selectedName === 'Temperature'){
-                url = url.concat('yearlyAveragesTemp/', this.yearlyAverages.selectedName, '/', this.$store.state.mapCoords.lat, '/', this.$store.state.mapCoords.long, 
-                '/', this.yearlyAverages.selectedAggr, '/')
-            }else{
-                url = url.concat('yearlyAveragesOther/', this.yearlyAverages.selectedName, '/', this.$store.state.mapCoords.lat, '/', this.$store.state.mapCoords.long, '/')        
-            }
-
-            url = url.concat(this.API_key, '?format=', this.yearlyAverages.selectedFormat, '&type=', this.yearlyAverages.selectedType);
-
-            if(this.yearlyAverages.years_clima_start){
-                url = url.concat('&years_clima_start=', this.yearlyAverages.years_clima_start)
-            }
-            if(this.yearlyAverages.years_clima_end){
-                url = url.concat('&years_clima_end=', this.yearlyAverages.years_clima_end)
-            }
-            if(this.yearlyAverages.years_actual_start){
-                url = url.concat('&years_actual_start=', this.yearlyAverages.years_actual_start)
-            }
-            if(this.yearlyAverages.years_actual_end){
-                url = url.concat('&years_actual_end=', this.yearlyAverages.years_actual_end)
-            }
-            if(this.yearlyAverages.location_name){
-                url = url.concat('&location_name=', this.yearlyAverages.location_name)
-            }
-            
-            this.$eventBus.$emit('get-output', url, this.yearlyAverages.selectedFormat); 
-            
-        }
-    },
-
+    }
 };
 </script>
 

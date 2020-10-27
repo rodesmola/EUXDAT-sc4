@@ -41,14 +41,14 @@
             </v-flex>
 
             <v-flex xs3 class="pl-3 pr-3">
-                <v-text-field hide-selected dense color="#77b942" type="number" v-model="eventDailyDistributions.month_start" 
+                <v-text-field hide-selected dense color="#77b942" type="text" v-model="eventDailyDistributions.month_start" 
                     :value="eventDailyDistributions.month_start" label="Initial month" title="Initial month of growing season" 
                     @input="$v.eventDailyDistributions.month_start.$touch()" @blur="$v.eventDailyDistributions.month_start.$touch()"
                     :error-messages="month_startErrors">
                 </v-text-field>
             </v-flex>
             <v-flex xs3 class="pl-3 pr-3">
-                <v-text-field hide-no-data hide-selected dense color="#77b942" type="number" v-model="eventDailyDistributions.month_end" 
+                <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="eventDailyDistributions.month_end" 
                     :value="eventDailyDistributions.month_end" label="Final month" title="Final month of growing season" 
                     @input="$v.eventDailyDistributions.month_end.$touch()" @blur="$v.eventDailyDistributions.month_end.$touch()"
                     :error-messages="month_endErrors">
@@ -56,28 +56,28 @@
             </v-flex>
 
             <v-flex xs3 class="pl-3 pr-3">
-                <v-text-field hide-no-data hide-selected dense color="#77b942" type="number" v-model="eventDailyDistributions.years_clima_start" 
+                <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="eventDailyDistributions.years_clima_start" 
                     :value="eventDailyDistributions.years_clima_start" label="First year comp." title="First year of past comparison period, from 1985 onwards." 
                     @input="$v.eventDailyDistributions.years_clima_start.$touch()" @blur="$v.eventDailyDistributions.years_clima_start.$touch()"
                     :error-messages="years_clima_startErrors">                        
                 </v-text-field>
             </v-flex>  
             <v-flex xs3 class="pl-3 pr-3">
-                <v-text-field hide-no-data hide-selected dense color="#77b942" type="number" v-model="eventDailyDistributions.years_clima_end" 
+                <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="eventDailyDistributions.years_clima_end" 
                     :value="eventDailyDistributions.years_clima_end" label="Last year comp." title="Last year of past comparison period." 
                     @input="$v.eventDailyDistributions.years_clima_end.$touch()" @blur="$v.eventDailyDistributions.years_clima_end.$touch()"
                     :error-messages="years_clima_endErrors">                        
                 </v-text-field>
             </v-flex>   
             <v-flex xs3 class="pl-3 pr-3">
-                <v-text-field hide-no-data hide-selected dense color="#77b942" type="number" v-model="eventDailyDistributions.years_actual_start" 
+                <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="eventDailyDistributions.years_actual_start" 
                     :value="eventDailyDistributions.years_actual_start" label="First year of recent comp." title="First year of recent comparison period, from 1985 onwards." 
                     @input="$v.eventDailyDistributions.years_actual_start.$touch()" @blur="$v.eventDailyDistributions.years_actual_start.$touch()"
                     :error-messages="years_actual_startErrors">  
                 </v-text-field>
             </v-flex>            
             <v-flex xs3 class="pl-3 pr-3">
-                <v-text-field hide-no-data hide-selected dense color="#77b942" type="number" v-model="eventDailyDistributions.years_actual_end" 
+                <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="eventDailyDistributions.years_actual_end" 
                     :value="eventDailyDistributions.years_actual_end" label="Last year of recent comp." title="Last year of recent comparison period." 
                     @input="$v.eventDailyDistributions.years_actual_end.$touch()" @blur="$v.eventDailyDistributions.years_actual_end.$touch()"
                     :error-messages="years_actual_endErrors">
@@ -85,7 +85,7 @@
             </v-flex>    
 
             <v-flex xs3 class="pl-3 pr-3">
-                <v-text-field hide-no-data hide-selected dense color="#77b942" type="number" v-model="eventDailyDistributions.threshold" 
+                <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="eventDailyDistributions.threshold" 
                     :value="eventDailyDistributions.threshold" label="Threshold" title="Threshold below/above which event happens." 
                     @input="$v.eventDailyDistributions.threshold.$touch()" @blur="$v.eventDailyDistributions.threshold.$touch()"
                     :error-messages="thresholdErrors">
@@ -93,7 +93,7 @@
             </v-flex>    
 
             <v-flex xs3 class="pl-3 pr-3">
-                <v-text-field hide-no-data hide-selected dense color="#77b942" type="number" v-model="eventDailyDistributions.duration" 
+                <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="eventDailyDistributions.duration" 
                     :value="eventDailyDistributions.duration" label="Duration" title="Duration threshold (hours) above which event happens." 
                     @input="$v.eventDailyDistributions.duration.$touch()" @blur="$v.eventDailyDistributions.duration.$touch()"
                     :error-messages="durationErrors">
@@ -101,7 +101,7 @@
             </v-flex>
 
             <v-flex xs3 class="pl-3 pr-3">
-                <v-text-field hide-no-data hide-selected dense color="#77b942" type="number" v-model="eventDailyDistributions.var_maximum" 
+                <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="eventDailyDistributions.var_maximum" 
                     :value="eventDailyDistributions.var_maximum" label="Maximum possible variable value" title="Maximum possible variable value (when meaningful)." 
                     @input="$v.eventDailyDistributions.var_maximum.$touch()" @blur="$v.eventDailyDistributions.var_maximum.$touch()"
                     :error-messages="var_maximumErrors">
@@ -119,12 +119,14 @@
 </template>
 
 <script>
-import { required, between, numeric } from 'vuelidate/lib/validators'
+import { required, between, numeric } from 'vuelidate/lib/validators';
+import CONST from "../const";
 export default {
     name: "eventDailyDistributions",    
-    data: () => ({        
+    data: () => ({  
+        baseAPIurl: CONST.baseAPIurl,        
+        API_key: CONST.API_key,               
         isLoading: false,
-        API_key: "1a98a8ef2598-EU-SG-testing", 
         eventDailyDistributionsValid: false,                                 
         eventDailyDistributions: {
             location_name: '',
@@ -153,6 +155,44 @@ export default {
             },     
         },
     }),
+    methods: {   
+        runService(){
+            this.$v.$touch()
+              
+        
+            var url = this.baseAPIurl.concat('eventDailyDistributions/', this.eventDailyDistributions.selectedName, '/', this.$store.state.mapCoords.lat, 
+                '/', this.$store.state.mapCoords.long, '/', this.eventDailyDistributions.month_start, '/', this.eventDailyDistributions.month_end, '/', 
+                this.API_key, '?format=', this.eventDailyDistributions.selectedFormat, '&event_aggr=', this.eventDailyDistributions.selectedEvent.value);
+
+            if(this.eventDailyDistributions.years_clima_start){
+                url = url.concat('&years_clima_start=', this.eventDailyDistributions.years_clima_start)
+            }
+            if(this.eventDailyDistributions.years_clima_end){
+                url = url.concat('&years_clima_end=', this.eventDailyDistributions.years_clima_end)
+            }
+            if(this.eventDailyDistributions.years_actual_start){
+                url = url.concat('&years_actual_start=', this.eventDailyDistributions.years_actual_start)
+            }
+            if(this.eventDailyDistributions.years_actual_end){
+                url = url.concat('&years_actual_end=', this.eventDailyDistributions.years_actual_end)
+            }
+            if(this.eventDailyDistributions.location_name){
+                url = url.concat('&location_name=', this.eventDailyDistributions.location_name)
+            }
+            if(this.eventDailyDistributions.threshold){
+                url = url.concat('&threshold=', this.eventDailyDistributions.threshold)
+            }
+            if(this.eventDailyDistributions.duration){
+                url = url.concat('&duration=', this.eventDailyDistributions.duration)
+            }
+            if(this.eventDailyDistributions.var_maximum){
+                url = url.concat('&var_maximum=', this.eventDailyDistributions.var_maximum)
+            }            
+            
+            this.$eventBus.$emit('get-output', url, this.eventDailyDistributions.selectedFormat);         
+
+        }
+    },    
     validations: {
        eventDailyDistributions:{   
             threshold: {numeric},
@@ -230,46 +270,7 @@ export default {
             !this.$v.eventDailyDistributions.years_actual_end.numeric && errors.push('Insert a number')
             return errors
         },                  
-    },
-    methods: {   
-        runService(){
-            this.$v.$touch()
-            var url = 'http://pyapi.meteoblue.com/';    
-        
-            url = url.concat('eventDailyDistributions/', this.eventDailyDistributions.selectedName, '/', this.$store.state.mapCoords.lat, 
-                '/', this.$store.state.mapCoords.long, '/', this.eventDailyDistributions.month_start, '/', this.eventDailyDistributions.month_end, '/', 
-                this.API_key, '?format=', this.eventDailyDistributions.selectedFormat, '&event_aggr=', this.eventDailyDistributions.selectedEvent.value);
-
-            if(this.eventDailyDistributions.years_clima_start){
-                url = url.concat('&years_clima_start=', this.eventDailyDistributions.years_clima_start)
-            }
-            if(this.eventDailyDistributions.years_clima_end){
-                url = url.concat('&years_clima_end=', this.eventDailyDistributions.years_clima_end)
-            }
-            if(this.eventDailyDistributions.years_actual_start){
-                url = url.concat('&years_actual_start=', this.eventDailyDistributions.years_actual_start)
-            }
-            if(this.eventDailyDistributions.years_actual_end){
-                url = url.concat('&years_actual_end=', this.eventDailyDistributions.years_actual_end)
-            }
-            if(this.eventDailyDistributions.location_name){
-                url = url.concat('&location_name=', this.eventDailyDistributions.location_name)
-            }
-            if(this.eventDailyDistributions.threshold){
-                url = url.concat('&threshold=', this.eventDailyDistributions.threshold)
-            }
-            if(this.eventDailyDistributions.duration){
-                url = url.concat('&duration=', this.eventDailyDistributions.duration)
-            }
-            if(this.eventDailyDistributions.var_maximum){
-                url = url.concat('&var_maximum=', this.eventDailyDistributions.var_maximum)
-            }            
-            
-            this.$eventBus.$emit('get-output', url, this.eventDailyDistributions.selectedFormat);         
-
-        }
-    },
-
+    }
 };
 </script>
 

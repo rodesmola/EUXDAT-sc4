@@ -39,49 +39,49 @@
             </v-flex>
 
             <v-flex xs3 class="pl-3 pr-3">
-                <v-text-field hide-no-data hide-selected dense color="#77b942" type="number" v-model="eventHourlyDistributions.month_start" 
+                <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="eventHourlyDistributions.month_start" 
                     :value="eventHourlyDistributions.month_start" label="Initial month" title="Initial month of growing season" 
                     @input="$v.eventHourlyDistributions.month_start.$touch()" @blur="$v.eventHourlyDistributions.month_start.$touch()"
                     :error-messages="month_startErrors">
                 </v-text-field>
             </v-flex>
             <v-flex xs3 class="pl-3 pr-3">
-                <v-text-field hide-no-data hide-selected dense color="#77b942" type="number" v-model="eventHourlyDistributions.month_end" 
+                <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="eventHourlyDistributions.month_end" 
                     :value="eventHourlyDistributions.month_end" label="Final month" title="Final month of growing season" 
                     @input="$v.eventHourlyDistributions.month_end.$touch()" @blur="$v.eventHourlyDistributions.month_end.$touch()"
                     :error-messages="month_endErrors">
                 </v-text-field>
             </v-flex>
             <v-flex xs3 class="pl-3 pr-3">
-                <v-text-field hide-no-data hide-selected dense color="#77b942" type="number" v-model="eventHourlyDistributions.years_clima_start" 
+                <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="eventHourlyDistributions.years_clima_start" 
                     :value="eventHourlyDistributions.years_clima_start" label="First year comp." title="First year of past comparison period, from 1985 onwards." 
                     @input="$v.eventHourlyDistributions.years_clima_start.$touch()" @blur="$v.eventHourlyDistributions.years_clima_start.$touch()"
                     :error-messages="years_clima_startErrors">                        
                 </v-text-field>
             </v-flex>  
             <v-flex xs3 class="pl-3 pr-3">
-                <v-text-field hide-no-data hide-selected dense color="#77b942" type="number" v-model="eventHourlyDistributions.years_clima_end" 
+                <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="eventHourlyDistributions.years_clima_end" 
                     :value="eventHourlyDistributions.years_clima_end" label="Last year comp." title="Last year of past comparison period." 
                     @input="$v.eventHourlyDistributions.years_clima_end.$touch()" @blur="$v.eventHourlyDistributions.years_clima_end.$touch()"
                     :error-messages="years_clima_endErrors">                        
                 </v-text-field>
             </v-flex>   
             <v-flex xs3 class="pl-3 pr-3">
-                <v-text-field hide-no-data hide-selected dense color="#77b942" type="number" v-model="eventHourlyDistributions.years_actual_start" 
+                <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="eventHourlyDistributions.years_actual_start" 
                     :value="eventHourlyDistributions.years_actual_start" label="First year of recent comp." title="First year of recent comparison period, from 1985 onwards." 
                     @input="$v.eventHourlyDistributions.years_actual_start.$touch()" @blur="$v.eventHourlyDistributions.years_actual_start.$touch()"
                     :error-messages="years_actual_startErrors">  
                 </v-text-field>
             </v-flex>            
             <v-flex xs3 class="pl-3 pr-3">
-                <v-text-field hide-no-data hide-selected dense color="#77b942" type="number" v-model="eventHourlyDistributions.years_actual_end" 
+                <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="eventHourlyDistributions.years_actual_end" 
                     :value="eventHourlyDistributions.years_actual_end" label="Last year of recent comp." title="Last year of recent comparison period." 
                     @input="$v.eventHourlyDistributions.years_actual_end.$touch()" @blur="$v.eventHourlyDistributions.years_actual_end.$touch()"
                     :error-messages="years_actual_endErrors">
                 </v-text-field>
             </v-flex>    
             <v-flex xs3 class="pl-3 pr-3">
-                <v-text-field hide-no-data hide-selected dense color="#77b942" type="number" v-model="eventHourlyDistributions.threshold" 
+                <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="eventHourlyDistributions.threshold" 
                     :value="eventHourlyDistributions.threshold" label="Threshold" title="Threshold below/above which event happens." 
                     @input="$v.eventHourlyDistributions.threshold.$touch()" @blur="$v.eventHourlyDistributions.threshold.$touch()"
                     :error-messages="thresholdErrors">
@@ -89,7 +89,7 @@
             </v-flex>    
 
             <v-flex xs3 class="pl-3 pr-3">
-                <v-text-field hide-no-data hide-selected dense color="#77b942" type="number" v-model="eventHourlyDistributions.duration" 
+                <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="eventHourlyDistributions.duration" 
                     :value="eventHourlyDistributions.duration" label="Duration" title="Duration threshold (hours) above which event happens." 
                     @input="$v.eventHourlyDistributions.duration.$touch()" @blur="$v.eventHourlyDistributions.duration.$touch()"
                     :error-messages="durationErrors">
@@ -108,12 +108,14 @@
 </template>
 
 <script>
-import { required, between, numeric } from 'vuelidate/lib/validators'
+import { required, between, numeric } from 'vuelidate/lib/validators';
+import CONST from "../const";
 export default {
     name: "eventHourlyDistributions",    
-    data: () => ({        
-        isLoading: false,
-        API_key: "1a98a8ef2598-EU-SG-testing", 
+    data: () => ({   
+        baseAPIurl: CONST.baseAPIurl,        
+        API_key: CONST.API_key,              
+        isLoading: false,        
         eventHourlyDistributionsValid: false,                                 
         eventHourlyDistributions: {
             location_name: '',
@@ -149,6 +151,40 @@ export default {
             threshold: "",              
         }
     }),
+    methods: {   
+        runService(){
+            this.$v.$touch()
+                    
+            var url = this.baseAPIurl.concat('eventHourlyDistributions/', this.eventHourlyDistributions.selectedName, '/', this.$store.state.mapCoords.lat, 
+                '/', this.$store.state.mapCoords.long, '/', this.eventHourlyDistributions.month_start, '/', 
+                this.eventHourlyDistributions.month_end, '/', this.API_key, '?format=', this.eventHourlyDistributions.selectedFormat,
+                '&event_aggr=', this.eventHourlyDistributions.selectedEvent.value);
+
+            if(this.eventHourlyDistributions.years_clima_start){
+                url = url.concat('&years_clima_start=', this.eventHourlyDistributions.years_clima_start)
+            }
+            if(this.eventHourlyDistributions.years_clima_end){
+                url = url.concat('&years_clima_end=', this.eventHourlyDistributions.years_clima_end)
+            }
+            if(this.eventHourlyDistributions.years_actual_start){
+                url = url.concat('&years_actual_start=', this.eventHourlyDistributions.years_actual_start)
+            }
+            if(this.eventHourlyDistributions.years_actual_end){
+                url = url.concat('&years_actual_end=', this.eventHourlyDistributions.years_actual_end)
+            }
+            if(this.eventHourlyDistributions.location_name){
+                url = url.concat('&location_name=', this.eventHourlyDistributions.location_name)
+            }
+            if(this.eventHourlyDistributions.threshold){
+                url = url.concat('&threshold=', this.eventHourlyDistributions.threshold)
+            }
+            if(this.eventHourlyDistributions.duration){
+                url = url.concat('&duration=', this.eventHourlyDistributions.duration)
+            }   
+            
+            this.$eventBus.$emit('get-output', url, this.eventHourlyDistributions.selectedFormat);             
+        }
+    },    
     validations: {
        eventHourlyDistributions:{       
             month_start: {required, between: between(0, 12), numeric},
@@ -231,41 +267,6 @@ export default {
             !this.$v.eventHourlyDistributions.years_actual_end.numeric && errors.push('Insert a number')
             return errors
         },                  
-    },
-    methods: {   
-        runService(){
-            this.$v.$touch()
-            var url = 'http://pyapi.meteoblue.com/';     
-        
-            url = url.concat('eventHourlyDistributions/', this.eventHourlyDistributions.selectedName, '/', this.$store.state.mapCoords.lat, 
-                '/', this.$store.state.mapCoords.long, '/', this.eventHourlyDistributions.month_start, '/', 
-                this.eventHourlyDistributions.month_end, '/', this.API_key, '?format=', this.eventHourlyDistributions.selectedFormat,
-                '&event_aggr=', this.eventHourlyDistributions.selectedEvent.value);
-
-            if(this.eventHourlyDistributions.years_clima_start){
-                url = url.concat('&years_clima_start=', this.eventHourlyDistributions.years_clima_start)
-            }
-            if(this.eventHourlyDistributions.years_clima_end){
-                url = url.concat('&years_clima_end=', this.eventHourlyDistributions.years_clima_end)
-            }
-            if(this.eventHourlyDistributions.years_actual_start){
-                url = url.concat('&years_actual_start=', this.eventHourlyDistributions.years_actual_start)
-            }
-            if(this.eventHourlyDistributions.years_actual_end){
-                url = url.concat('&years_actual_end=', this.eventHourlyDistributions.years_actual_end)
-            }
-            if(this.eventHourlyDistributions.location_name){
-                url = url.concat('&location_name=', this.eventHourlyDistributions.location_name)
-            }
-            if(this.eventHourlyDistributions.threshold){
-                url = url.concat('&threshold=', this.eventHourlyDistributions.threshold)
-            }
-            if(this.eventHourlyDistributions.duration){
-                url = url.concat('&duration=', this.eventHourlyDistributions.duration)
-            }   
-            
-            this.$eventBus.$emit('get-output', url, this.eventHourlyDistributions.selectedFormat);             
-        }
     },
 
 };

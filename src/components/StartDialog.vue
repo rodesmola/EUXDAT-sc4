@@ -6,52 +6,45 @@
                                     
                 <div style="margin-bottom: 15px; margin-top: 15px">
                     <img style="width: 160px; position: absolute; opacity: 0.2; bottom: 5px; right: 5px;" src="../assets/logo2.png" alt="">
-                    <span class="title" style="color: #1e2f4d;">Climate pattern changes</span>
+                    <span class="title" style="color: #1e2f4d;">Climate risk analysis</span>
                 </div> 
                 <p>
-                    Today, climate change is affecting most areas in Europe. The magnitude of the changes
-                    is not yet fully known, however, the variability over the past 10 to 30 years is rather precisely understood.
-                    This system will allow an assessment of trends, frequency distribution and extremes
-                    for the major weather-related variables (temperature, precipitation, evapotranspiration, soil moisture)
-                    for agricultural zones. It can link to the other system.
-                    The differences to existing climate databases will be the following:
+                    Today, climate change is affecting most areas in Europe. The magnitude of the changes is not yet fully known, 
+                    however, the variability over the past 10 to 30 years is rather precisely understood. This knowledge 
+                    can be used to mitigate climate change risks but must be made available in suitable ways.
                 </p>
                 <p>
-                    <ul>
-                    <li>Analysis will be focussed on crop land (filter).</li>
-                    <li>Analysis will be focussed on cropping seasons (filter applicable for
-                        different crops, e.g. summer crops, winter crops, perennial crops).</li>
-                    <li>Analysis will allow users to upload own records (e.g. temperature
-                        measurements) to benchmark regional model data.</li>
-                    <li>The service can (but does not have to) link to existing climate
-                        change models which quantify future changes.</li>
-                    </ul>
+                    A number of crop-specific and generic climate analysis services were developed in the EUXDAT project. 
+                    The first three services available here allow you to assess climatic conditions: 
+                </p>                
+                <p>
+                    <ol>
+                    <li> <span style="font-style: italic;">"Crop climate risk analysis"</span>: the drought and frost risks for a particular crop at a particular 
+                        location using different time periods as reference;</li>
+                    <li><span style="font-style: italic;">"Climate pattern comparison"</span>: differences of climatic patterns for the major 
+                        weather-related variables (temperature, precipitation, evapotranspiration, soil moisture) 
+                        at a particular location for different time periods;</li>
+                    <li><span style="font-style: italic;">"Generic climate risk assessment"</span>: climatic trends, frequency distributions and extremes for 
+                        the major weather-related variables (temperature, precipitation, evapotranspiration, soil moisture) 
+                        at a particular location for different time periods.</li>
+                    </ol>
                 </p>
                 <p style="margin-bottom: 15px;">
-                    This service will create a unique ability to assess potential impact of climate change on local production.
+                    These services support mid-term decisions such as which crops to plant at which locations, when to plant in the crop cycle, and so on.
+                </p>
+                
+                <div style="margin-bottom: 15px; margin-top: 15px">                 
+                    <span class="title" style="color: #1e2f4d;">Weather risk monitoring and prediction</span>
+                </div> 
+                <p>
+                   A fourth service (<span style="font-style: italic;">“Crop weather risk monitoring and prediction”</span>) allows you to monitor the drought and frost risks 
+                   for a particular crop at a particular location during its growth period. Data include the current season’s weather to date, 
+                   a 7-day forecast, and a seasonal forecast. In addition, single or multiple reference years can be included for comparison. 
+                   This service supports operational decisions such as when to plant, fertilize, irrigate, etc
                 </p>
                 <p>
-                    <span class="title" style="color: #37aa48; font-size 12px;">
-                    Specifications
-                    </span>
-                </p>
-                <p>
-                    These extremes change over time, and the mapping exercise would consist of defining long-term indices for
-                    change (frequency of frost or heat, heavy rainfall or drought, storms) and plotting them on maps.
-                    Local detail is not of such concern in these maps, since large-scale frequency changes occur over longer periods
-                    of time and larger areas and are not subject to local micro-climate.
-                    Details must still be worked out, because this pattern change so far only uses weather input and does not
-                    yet connect this input with other data. Options to enhance the service:
-                </p>
-                <p style="margin-bottom: 5px;">
-                    <ul>
-                    <li>Upload weather station data (for 1-2 years) to validate sources for long-term data.</li>
-                    <li>Downscale simulations using topography/slope.</li>
-                    <li>Integrate climate risk with soil data, e.g. impact of drought on soils with san, silt, clay, or peat content.</li>
-                    <li>Insert crop growth thresholds to show impact of climate variations on different crops.</li>
-                    <li>Simulate effect of climate on different crops (link to scenario 2).</li>
-                    </ul>
-                </p>
+                   All services can be run for any location in Europe and globally. Accuracy will vary depending on the accuracy of the available weather and climate data.
+                </p>  
             </v-card>
         </v-flex>
     </v-card-text>

@@ -48,7 +48,7 @@
             <v-toolbar class="green" tabs  height="42px">
               <v-toolbar-title>
                 <img style="width: 30px;" src="../assets/logo_1-1.png" alt="">
-                <span style="font-size: 18px; margin-left: 5px;">Climatic pattern changes</span>
+                <span style="font-size: 18px; margin-left: 5px;">Climate risk analysis and mitigation</span>
               </v-toolbar-title>
 
               <v-spacer></v-spacer>
@@ -70,15 +70,18 @@
                       <template v-slot:header >                        
                         <div class="exp-tittle" @click="updateComponent(i)">{{item.name}}</div>                      
                       </template>              
-                      <div v-if="i === 0" :key="componetRCkey">
-                        <RiskComparison/>
-                      </div>  
-                      <div v-if="i === 1" :key="componetRAkey">                        
+                      <div v-if="i === 0" :key="componetRAkey">                        
                         <RiskAnalysis/>
-                      </div>                                                  
+                      </div>     
+                      <div v-if="i === 1" :key="componetRCkey">
+                        <RiskComparison/>
+                      </div>                                                                     
                       <div v-if="i === 2" :key="componetCPkey">
                         <ClimaticPatterns/>
                       </div>
+                      <div v-if="i === 3" :key="componetCWkey">
+                        <CropWeather/>
+                      </div>                      
                     </v-expansion-panel-content>
                   </v-expansion-panel>
                   
@@ -184,6 +187,7 @@ import StartDialog from '@/components/StartDialog.vue'
 import ClimaticPatterns from '@/components/ClimaticPatterns.vue'
 import RiskAnalysis from '@/components/RiskAnalysis.vue'
 import RiskComparison from '@/components/RiskComparison.vue'
+import CropWeather from '@/components/CropWeather.vue'
 
 export default {
   name: 'Map',
@@ -192,15 +196,17 @@ export default {
     ClimaticPatterns,
     RiskAnalysis,
     RiskComparison,
+    CropWeather
   },
   data: () => ({
     startDialog: true,
     mapCoordsValid: false,
     selectedBaseLayer: 'aerial',
-    panels: [
-      {"name": "Crop climate risk Comparison"},
-      {"name": "Crop climate risk analysis"},      
-      {"name": "Cimatic patterns"}
+    panels: [      
+      {"name": "Crop climate risk analysis"},    
+      {"name": "Climate pattern comparison"},  
+      {"name": "Generic climate risk assessment"},
+      {"name": "Crop weather risk monitoring and prediction"},
     ],   
     isAlert: false,
     alertMsg: "",
@@ -208,6 +214,7 @@ export default {
     componetRAkey: 0,
     componetCPkey: 0,
     componetRCkey: 0,
+    componetCWkey: 0,
     mapCoords: {
       lat: 0,
       long: 0,
@@ -223,14 +230,16 @@ export default {
     */
     updateComponent(i){
       if(i === 0){
-        this.componetRCkey ++
+        this.componetRAkey ++
         //this.$eventBus.$emit('updateComponetRA', this.componetRAkey);
       }else if (i === 1){
-        this.componetRAkey ++
+        this.componetRCkey ++       
         //this.$eventBus.$emit('updateComponetMZ', this.componetMZkey);
-      }else {
+      }else if (i === 2) {
         this.componetCPkey ++
-      } 
+      } else {
+        this.componetCWkey ++
+      }
     },
     /**
     * Initialize Map, base layer, styles and select interaction

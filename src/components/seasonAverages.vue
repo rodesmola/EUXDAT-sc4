@@ -5,7 +5,7 @@
 
             <v-flex xs8 sm8 md6 lg8 xlg8 class="pl-3 pr-3">
                 <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="seasonAverages.location_name" :value="seasonAverages.location_name"
-                label="Diagram title"></v-text-field>
+                label="Location name" title="Location name, labels the diagram, has no effect on data."></v-text-field>
             </v-flex>
 
             <v-flex sm9 xs6 md6 lg4 xlg4 class="pl-3 pr-3">

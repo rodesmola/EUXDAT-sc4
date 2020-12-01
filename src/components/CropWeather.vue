@@ -16,7 +16,7 @@
 
                     <v-flex xs8 sm8 md6 lg8 xlg8 class="pl-3 pr-3">
                         <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="cropWeather.location_name" :value="cropWeather.location_name"
-                        label="Diagram title"></v-text-field>
+                        label="Location name" title="Location name, labels the diagram, has no effect on data."></v-text-field>
                     </v-flex>
 
                     <v-flex sm9 xs6 md6 lg4 xlg4 class="pl-3 pr-3">
@@ -29,6 +29,28 @@
                         color="green"
                         ></v-combobox>
                     </v-flex>
+
+                    <v-flex sm9 xs6 md6 lg6 xlg6 class="pl-3 pr-3">
+                        <v-combobox hide-no-data hide-selected dense style="margin-top: 0px; padding-top: 0px"
+                        v-model="cropWeather.eventRiskSelected"
+                        :items="cropWeather.eventRiskArr"
+                        item-text="name"
+                        item-value="value"
+                        label="Select risk event"
+                        color="green"
+                        ></v-combobox>
+                    </v-flex>
+
+                    <v-flex sm9 xs6 md6 lg6 xlg6 class="pl-3 pr-3">
+                        <v-combobox hide-no-data hide-selected dense style="margin-top: 0px; padding-top: 0px"
+                        v-model="cropWeather.cropOfInterestSelected"
+                        :items="cropWeather.cropOfInterestArr"
+                        item-text="name"
+                        item-value="value"
+                        label="Select crop"
+                        color="green"
+                        ></v-combobox>
+                    </v-flex>                    
 
                     <v-flex xs3 class="pl-3 pr-3">
                         <v-text-field hide-no-data hide-selected dense color="#77b942" type="number" v-model="cropWeather.years_clima_start" 
@@ -239,11 +261,13 @@
 <script>
 
 import { decimal, between, numeric } from 'vuelidate/lib/validators'
+import CONST from "../const";
 export default {
     name: "CropWeather",
     data: () => ({
-        //API_key: "8vh83gfhu34g",
-        API_key: "1a98a8ef2598-EU-SG-testing",
+        baseAPIurl: CONST.baseAPIurl,        
+        API_key: CONST.API_key,
+        //API_key: "1a98a8ef2598-EU-SG-testing",
         isLoading: false,
         outputDialog: false,
         infoDialog: false,
@@ -252,28 +276,32 @@ export default {
         outputjson: {},
         format: "",
         cropWeather: {
+            eventRiskSelected: 'Drought',
+            eventRiskArr: ['Drought', 'Frost'],
+            cropOfInterestSelected: 'Cotton',
+            cropOfInterestArr: ['Cotton', 'Maize', 'Soybeans', 'Spring_Barley', 'Summer_Wheat', 'Sunflowers', 'Vineyards', 'Winter_Wheat'],            
             years_clima_start: 1985,
             years_clima_end: 1995,
             years_actual_start: 2010,
             years_actual_end: 2020,
-            month_start: 5,
-            month_end: 9,
-            t_base: 4,
-            t_max: 30,
+            month_start: '',
+            month_end: '',
+            t_base: '',
+            t_max: '',
             selectedFormat: 'png',
             formatArr: ['png', 'json', 'highchartsHtml'],
-            soil_water_capacity: 50,
-            drought_threshold: 5,
-            drought_duration: 3,
-            frost_threshold: 0,
-            frost_duration: 3,
+            soil_water_capacity: '',
+            drought_threshold: '',
+            drought_duration: '',
+            frost_threshold: '',
+            frost_duration: '',
             location_name: '',
         },            
      }),
      methods: {
         runService(){
             this.$v.$touch()
-            var url = 'http://pyapi.meteoblue.com/cropWeatherRiskMonitoring/Drought/Winter_Wheat/';    
+            var url = this.baseAPIurl.concat('cropWeatherRiskMonitoring/', this.cropWeather.eventRiskSelected, '/', this.cropWeather.cropOfInterestSelected, '/');    
         
             url = url.concat(this.$store.state.mapCoords.lat, '/', this.$store.state.mapCoords.long, '/', this.API_key, 
             '?format=', this.cropWeather.selectedFormat);

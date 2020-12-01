@@ -14,6 +14,22 @@
             <v-form ref="riskAnalysisForm" v-model="riskAnalysisValid">
                 <v-layout row wrap class="pl-2 pr-2"> 
 
+                    <v-flex xs8 sm8 md6 lg8 xlg8 class="pl-3 pr-3">
+                        <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="riskAnalysis.location_name" :value="riskAnalysis.location_name"
+                        label="Location name" title="Location name, labels the diagram, has no effect on data."></v-text-field>
+                    </v-flex>
+
+                    <v-flex sm9 xs6 md6 lg4 xlg4 class="pl-3 pr-3">
+                        <v-combobox hide-no-data hide-selected dense
+                        v-model="riskAnalysis.formatSelected"
+                        :items="riskAnalysis.formatArr"
+                        item-text="name"
+                        item-value="value"
+                        label="Select Diagram format"
+                        color="green"
+                        ></v-combobox>
+                    </v-flex>
+
                     <v-flex sm9 xs6 md6 lg6 xlg6 class="pl-3 pr-3">
                         <v-combobox hide-no-data hide-selected dense style="margin-top: 0px; padding-top: 0px"
                         v-model="riskAnalysis.eventRiskSelected"
@@ -34,23 +50,7 @@
                         label="Select crop"
                         color="green"
                         ></v-combobox>
-                    </v-flex>
-
-                    <v-flex xs8 sm8 md6 lg8 xlg8 class="pl-3 pr-3">
-                        <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="riskAnalysis.location_name" :value="riskAnalysis.location_name"
-                        label="Diagram title"></v-text-field>
-                    </v-flex>
-
-                    <v-flex sm9 xs6 md6 lg4 xlg4 class="pl-3 pr-3">
-                        <v-combobox hide-no-data hide-selected dense
-                        v-model="riskAnalysis.formatSelected"
-                        :items="riskAnalysis.formatArr"
-                        item-text="name"
-                        item-value="value"
-                        label="Select Diagram format"
-                        color="green"
-                        ></v-combobox>
-                    </v-flex>
+                    </v-flex>                    
 
                     <v-flex xs3 class="pl-3 pr-3">
                         <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="riskAnalysis.years_start" 
@@ -278,9 +278,9 @@ export default {
             t_max: "",
             soil_water_capacity: "",
             drought_threshold: "",
-            drought_duration: 3,
-            frost_threshold: 0,
-            frost_duration: 3,
+            drought_duration: "",
+            frost_threshold: "",
+            frost_duration: "",
             location_name: '',
         }    
     }),

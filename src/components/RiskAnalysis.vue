@@ -1,10 +1,10 @@
 <template>
   
     <div>        
-        <v-flex xs12 pl-2 row class="hidden-md-and-down">
-            <v-layout row wrap>
-            <p style="color: #27304c; font-size 6px;" class="pl-3 pr-3 hidden-lg-and-down">
-                The service will use the coordinates showed in the rigth side of the map, can be input by the user.                 
+        <v-flex xs12 pl-2 row >
+            <v-layout row wrap class="pl-2 pr-2">
+            <p style="color: #27304c; font-size 6px; margin-bottom: 5px;" class="pl-3 pr-3">
+                The service will use the coordinates showed in the right side of the map, can be input by the user.
                 <a @click="infoDialog = true">More info.</a>
             </p>
             </v-layout>
@@ -302,11 +302,22 @@ export default {
                 this.API_key + '?' +
                 'format=' + this.riskAnalysis.formatSelected +
                 '&years_start=' + this.riskAnalysis.years_start +
-                '&years_end=' + this.riskAnalysis.years_end +
-                '&drought_duration=' + this.riskAnalysis.drought_duration +
-                '&frost_threshold=' + this.riskAnalysis.frost_threshold +
-                '&frost_duration=' + this.riskAnalysis.frost_duration
+                '&years_end=' + this.riskAnalysis.years_end //+
+                //'&drought_duration=' + this.riskAnalysis.drought_duration +
+                //'&frost_threshold=' + this.riskAnalysis.frost_threshold +
+                //'&frost_duration=' + this.riskAnalysis.frost_duration
             )
+
+            if(this.riskAnalysis.drought_duration){
+                url = url.concat('&drought_duration=', this.riskAnalysis.drought_duration)
+            }
+            if(this.riskAnalysis.frost_threshold){
+                url = url.concat('&frost_threshold=', this.riskAnalysis.frost_threshold)
+            }
+            if(this.riskAnalysis.frost_duration){
+                url = url.concat('&frost_duration=', this.riskAnalysis.frost_duration)
+            }
+
 
             if(this.riskAnalysis.month_start){
                 url = url.concat('&month_start=', this.riskAnalysis.month_start)

@@ -44,7 +44,7 @@
         <v-flex id="map" style="max-height: 100vh; height: 100vh; padding: 0px; margin: 0px;">
           <div id="mapsight"></div>
           <!------------ Service form start ------------>
-          <div class="flex xs12 sm5 md4 lg3 xl3" style="position: absolute; z-index: 10; top:80px; left: 10px; background-color: #27304c;">
+          <div class="flex xs12 sm5 md4 lg4 xl3" style="position: absolute; z-index: 10; top:80px; left: 10px; background-color: #27304c;">
             <v-toolbar class="green" tabs  height="42px">
               <v-toolbar-title>
                 <img style="width: 30px;" src="../assets/logo_1-1.png" alt="">
@@ -59,7 +59,7 @@
 
             </v-toolbar>
 
-            <div style="background-color: white; padding-left: 10px; padding-right: 10px;">
+            <div style="background-color: white; padding-left: 10px; padding-right: 10px; overflow:auto; max-height: 80vh;">
 
               <div ref="form" style="margin-top: 10px; margin-bottom: 5px; text-size: 10px;">
                 <v-layout row wrap style="text-align: left; padding-top: 8px; padding-bottom: 8px;">

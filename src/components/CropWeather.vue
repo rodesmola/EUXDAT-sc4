@@ -1,14 +1,14 @@
 <template>
 
     <div>
-        <v-flex xs12 pl-2 row class="hidden-md-and-down">
-            <v-layout row wrap>
-            <p style="color: #27304c; font-size 6px;" class="pl-2 pr-2">
-                The service will use the coordinates showed in the rigth side of the map, can be input by the user.
+        <v-flex xs12 pl-2 row >
+            <v-layout row wrap class="pl-2 pr-2">
+            <p style="color: #27304c; font-size 6px; margin-bottom: 5px;" class="pl-3 pr-3">
+                The service will use the coordinates showed in the right side of the map, can be input by the user.
                 <a @click="infoDialog = true">More info.</a>
             </p>
             </v-layout>
-        </v-flex>
+        </v-flex>   
 
         <v-flex xs12 pl-2 row>
             <v-form ref="cropWeatherForm" v-model="cropWeatherValid">
@@ -53,28 +53,28 @@
                     </v-flex>                    
 
                     <v-flex xs3 class="pl-3 pr-3">
-                        <v-text-field hide-no-data hide-selected dense color="#77b942" type="number" v-model="cropWeather.years_clima_start" 
+                        <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="cropWeather.years_clima_start" 
                             :value="cropWeather.years_clima_start" label="First year comp." title="First year of past comparison period, from 1985 onwards." 
                             @input="$v.cropWeather.years_clima_start.$touch()" @blur="$v.cropWeather.years_clima_start.$touch()"
                             :error-messages="years_clima_startErrors">                        
                         </v-text-field>
                     </v-flex>  
                     <v-flex xs3 class="pl-3 pr-3">
-                        <v-text-field hide-no-data hide-selected dense color="#77b942" type="number" v-model="cropWeather.years_clima_end" 
+                        <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="cropWeather.years_clima_end" 
                             :value="cropWeather.years_clima_end" label="Last year comp." title="Last year of past comparison period." 
                             @input="$v.cropWeather.years_clima_end.$touch()" @blur="$v.cropWeather.years_clima_end.$touch()"
                             :error-messages="years_clima_endErrors">                        
                         </v-text-field>
                     </v-flex>   
                     <v-flex xs3 class="pl-3 pr-3">
-                        <v-text-field hide-no-data hide-selected dense color="#77b942" type="number" v-model="cropWeather.years_actual_start" 
+                        <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="cropWeather.years_actual_start" 
                             :value="cropWeather.years_actual_start" label="First year of recent comp." title="First year of recent comparison period, from 1985 onwards." 
                             @input="$v.cropWeather.years_actual_start.$touch()" @blur="$v.cropWeather.years_actual_start.$touch()"
                             :error-messages="years_actual_startErrors">  
                         </v-text-field>
                     </v-flex>            
                     <v-flex xs3 class="pl-3 pr-3">
-                        <v-text-field hide-no-data hide-selected dense color="#77b942" type="number" v-model="cropWeather.years_actual_end" 
+                        <v-text-field hide-no-data hide-selected dense color="#77b942" type="text" v-model="cropWeather.years_actual_end" 
                             :value="cropWeather.years_actual_end" label="Last year of recent comp." title="Last year of recent comparison period." 
                             @input="$v.cropWeather.years_actual_end.$touch()" @blur="$v.cropWeather.years_actual_end.$touch()"
                             :error-messages="years_actual_endErrors">

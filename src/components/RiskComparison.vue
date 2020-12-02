@@ -1,6 +1,6 @@
 <template>
-    <div>  
-        <v-layout row wrap>       
+    <div class="pl-2">  
+        <v-layout row wrap class="pl-2 pr-2">       
 
             <v-flex sm9 xs9 md9 class="pl-3 pr-3">
                 <v-combobox style="margin-top: 0px; padding-top: 0px"

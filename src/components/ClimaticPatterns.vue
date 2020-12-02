@@ -1,30 +1,30 @@
 <template>
 <div>  
     <div>        
-        <v-flex xs12 pl-2 row class="hidden-md-and-down">
-            <v-layout row wrap>
-            <p style="color: #27304c; font-size 6px;" class="pl-2 pr-2">
+        <v-flex xs12 pl-2 row >
+            <v-layout row wrap class="pl-2 pr-2">
+            <p style="color: #27304c; font-size 6px;" class="pl-3 pr-3">
                 The service will use the coordinates showed in the right side of the map, can be input by the user. 
             </p>
             </v-layout>
-        </v-flex>                    
-
-        <v-flex sm9 xs9 md9 class="pl-3 pr-3">
-            <v-combobox style="margin-top: 0px; padding-top: 0px"
-            v-model="selectedMbService"
-            :items="mbServices"
-            item-text="name"
-            item-value="value"
-            label="Select service"
-            color="green"
-            @change="resetForm()"
-            ></v-combobox>
-        </v-flex>
-
+        </v-flex> 
+        <v-layout row wrap class="pl-3 pr-2">
+            <v-flex sm9 xs9 md9 class="pl-3 pr-3">
+                <v-combobox style="margin-top: 0px; padding-top: 0px"
+                v-model="selectedMbService"
+                :items="mbServices"
+                item-text="name"
+                item-value="value"
+                label="Select service"
+                color="green"
+                @change="resetForm()"
+                ></v-combobox>
+            </v-flex>
+        </v-layout>
         <v-spacer></v-spacer>
 
         <v-flex xs12 pl-2 row v-if="selectedMbService.value == 'history_frostrisk?'">
-            <v-layout row wrap>
+            <v-layout row wrap class="pl-2 pr-2">
                 <v-flex xs12 class="pl-3 pr-3">
                     <p style="color: grey; font-size 8px; margin-bottom: 5px;">
                         <b>Cold event analysis:</b>

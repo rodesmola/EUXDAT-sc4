@@ -289,7 +289,7 @@ export default {
             t_base: '',
             t_max: '',
             selectedFormat: 'png',
-            formatArr: ['png', 'json', 'highchartsHtml'],
+            formatArr: ['png', 'highchartsHtml'], // ['png', 'json', 'highchartsHtml'],
             soil_water_capacity: '',
             drought_threshold: '',
             drought_duration: '',

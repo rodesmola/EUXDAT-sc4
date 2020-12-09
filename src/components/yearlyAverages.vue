@@ -114,7 +114,7 @@ export default {
             typeArr: ['Diagram', 'Distribution'],
             selectedType: 'Diagram',
             selectedFormat: 'png',
-            formatArr: ['png', 'json', 'highchartsHtml'],
+            formatArr: ['png', 'highchartsHtml'], // ['png', 'json', 'highchartsHtml'],
             years_clima_start: "",
             years_clima_end: "",
             years_actual_start: "",

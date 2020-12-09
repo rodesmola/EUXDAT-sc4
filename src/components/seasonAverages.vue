@@ -139,7 +139,7 @@ export default {
             month_start: 5,
             month_end: 10,
             selectedFormat: 'png',
-            formatArr: ['png', 'json', 'highchartsHtml'],
+            formatArr: ['png', 'highchartsHtml'], // ['png', 'json', 'highchartsHtml'],
             location_name: '',
             t_base: 3,
             t_max: 30,

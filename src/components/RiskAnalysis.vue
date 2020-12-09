@@ -269,7 +269,7 @@ export default {
             cropOfInterestSelected: 'Cotton',
             cropOfInterestArr: ['Cotton', 'Maize', 'Soybeans', 'Spring_Barley', 'Summer_Wheat', 'Sunflowers', 'Vineyards', 'Winter_Wheat'],
             formatSelected: 'png',
-            formatArr: ['png', 'json', 'highchartsHtml'],
+            formatArr: ['png', 'highchartsHtml'], // ['png', 'json', 'highchartsHtml'],
             years_start: 2010,
             years_end: 2020,
             month_start: "",
